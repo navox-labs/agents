@@ -19,13 +19,13 @@ Not sure where to start? Run this first:
 
 ## The Team
 
-| Agent | Slash Command | What it does |
+| Agent | Agent Name | What it does |
 |---|---|---|
-| 🏗️ Architect | `/architect` | System design, auth model, scalability, caching, handoff briefs |
-| 🎨 UI/UX | `/ux` | User flows, wireframes, visual design, component specs |
-| ⚙️ Full Stack | `/fullstack` | Builds features, writes unit tests, refactors, debugs |
-| 🧪 QA Engineer | `/qa` | Test plans, test runs, regression, auth flow coverage |
-| 🔐 Security | `/security` | Design review, code audit, launch sign-off, incident response |
+| 🏗️ Architect | `architect` | System design, auth model, scalability, caching, handoff briefs |
+| 🎨 UI/UX | `ux` | User flows, wireframes, visual design, component specs |
+| ⚙️ Full Stack | `fullstack` | Builds features, writes unit tests, refactors, debugs |
+| 🧪 QA Engineer | `qa` | Test plans, test runs, regression, auth flow coverage |
+| 🔐 Security | `security` | Design review, code audit, launch sign-off, incident response |
 
 ---
 
@@ -37,13 +37,13 @@ This is neither.
 These are Claude Code subagents — markdown files that live in your project or globally in `~/.claude/agents/`. They run entirely inside your Claude Code session. No API calls to a third-party server. No account. No telemetry. Just specialists you can hire from the terminal.
 
 ```
-/architect design a multi-tenant SaaS with JWT auth and Redis caching
+architect design a multi-tenant SaaS with JWT auth and Redis caching
 ```
 ```
-/security plan — I'm about to build auth for a fintech app, where do I start?
+security plan — I'm about to build auth for a fintech app, where do I start?
 ```
 ```
-/qa test-run — here's the code, find everything that can break
+qa test-run — here's the code, find everything that can break
 ```
 
 ---
@@ -68,7 +68,7 @@ cp -r agents/.claude/agents/* your-project/.claude/agents/
 Every agent has a `PLAN` mode for when you're not sure what you need.  
 Just describe your situation and the agent tells you what to do next.
 
-### 🏗️ Architect — `/architect`
+### 🏗️ Architect
 
 The first agent to talk to on any new project. Starts with `DIAGNOSE` if you don't know which agents you need.
 
@@ -86,7 +86,7 @@ Auth model, security constraints, testing strategy — all defined here before a
 
 ---
 
-### 🎨 UI/UX Agent — `/ux`
+### 🎨 UI/UX Agent
 
 Covers the full design process. Delivers specs the Full Stack agent can build directly — no design-to-engineering translation required.
 
@@ -103,7 +103,7 @@ Auth UX is fully covered — login, signup, error states, session expiry, recove
 
 ---
 
-### ⚙️ Full Stack Engineer — `/fullstack`
+### ⚙️ Full Stack Engineer
 
 Builds features from the Architect's brief and UI/UX specs. Unit tests are mandatory — not optional.
 
@@ -121,7 +121,7 @@ State your stack and it follows it. Override any default explicitly.
 
 ---
 
-### 🧪 QA Engineer — `/qa`
+### 🧪 QA Engineer
 
 Tests what was specified and what wasn't. Auth flows get extra scrutiny — most failures start there.
 
@@ -138,7 +138,7 @@ No vague reports. No passing tests without a clear success condition.
 
 ---
 
-### 🔐 Security Engineer — `/security`
+### 🔐 Security Engineer
 
 Active throughout the build — not just at launch. Auth is always the highest-priority surface.
 
@@ -160,21 +160,21 @@ Launch audit covers the full OWASP Top 10, auth security, dependency CVEs, secre
 ```
 You arrive with anything — idea, broken code, vague request
         ↓
-/architect DIAGNOSE     — figures out what you need and who to hire
+architect DIAGNOSE      — figures out what you need and who to hire
         ↓
-/architect DESIGN       — system design, auth model, security model, testing strategy
+architect DESIGN        — system design, auth model, security model, testing strategy
         ↓
-        ├── /ux FLOW → WIREFRAME → DESIGN → SPEC   (runs in parallel)
-        └── /security DESIGN-REVIEW                (runs in parallel)
+        ├── ux FLOW → WIREFRAME → DESIGN → SPEC    (runs in parallel)
+        └── security DESIGN-REVIEW                  (runs in parallel)
         ↓
-/fullstack BUILD        — code + unit tests, follows arch doc and UX specs
+fullstack BUILD         — code + unit tests, follows arch doc and UX specs
         ↓
-        ├── /qa TEST-RUN          (runs in parallel)
-        └── /security CODE-AUDIT  (runs in parallel)
+        ├── qa TEST-RUN           (runs in parallel)
+        └── security CODE-AUDIT   (runs in parallel)
         ↓
-/fullstack              — fixes all findings
+fullstack               — fixes all findings
         ↓
-/security LAUNCH-AUDIT  — final verdict
+security LAUNCH-AUDIT   — final verdict
         ↓
 ship
 ```
@@ -204,11 +204,11 @@ Every agent has a defined slice. Nothing falls through the gap.
 
 These agents are independent. You don't need the full team.
 
-- Building a new product? Start with `/architect DIAGNOSE`
-- Already have code, want it tested? `/qa PLAN`
-- Shipping next week and worried about security? `/security LAUNCH-AUDIT`
-- Something's broken and you don't know why? `/fullstack DEBUG`
-- Not sure which agent you need? `/architect DIAGNOSE` — describe your situation
+- Building a new product? Start with `architect DIAGNOSE`
+- Already have code, want it tested? `qa PLAN`
+- Shipping next week and worried about security? `security LAUNCH-AUDIT`
+- Something's broken and you don't know why? `fullstack DEBUG`
+- Not sure which agent you need? `architect DIAGNOSE` — describe your situation
 
 ---
 
