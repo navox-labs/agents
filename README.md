@@ -78,6 +78,7 @@ architect DIAGNOSE — I have a broken auth flow and I'm not sure where to start
 | ⚙️ **Full Stack** (`fullstack`) | Production code, unit tests, auth implementation | Building features, fixing bugs, refactoring, code review |
 | 👁️ **Local Review** (`local-review`) | Dev server, browser preview, owner checkpoint | After every build — mandatory human approval before QA runs |
 | 🧪 **QA** (`qa`) | Test plans, test execution, regression, auth flow testing | Testing delivered code, validating fixes, pre-launch coverage |
+| 🚀 **DevOps** (`devops`) | CI/CD pipelines, Docker, deployment, infrastructure | Setting up pipelines, containerizing, deploying, infra incidents |
 | 🔐 **Security** (`security`) | Threat modeling, auth audit, code review, launch sign-off | Design review, code audit, launch readiness, incident response |
 
 ---
@@ -171,6 +172,7 @@ Every agent has a defined slice. Nothing falls through the gap.
 | Auth implementation (code) | Full Stack Agent |
 | Auth unit tests + edge cases | Full Stack Agent |
 | Auth flow testing (happy + unhappy paths) | QA Agent |
+| Deployment secrets management (env vars, rotation) | DevOps Agent |
 | Auth security constraints | Security Agent |
 | Auth code audit | Security Agent |
 | Auth launch sign-off | Security Agent |
@@ -331,7 +333,7 @@ Launch audit covers the full OWASP Top 10, auth security, dependency CVEs, secre
 
 ## By the numbers
 
-- **6** specialist agents across architecture, UX, engineering, QA, and security — plus 1 orchestrator command that runs them all
+- **7** specialist agents across architecture, UX, engineering, DevOps, QA, and security — plus 1 orchestrator command that runs them all
 - **1** structured handoff chain with zero gaps in auth ownership
 - **1** mandatory human checkpoint built into every run
 - **Persistent** project memory that carries context across sessions
@@ -345,6 +347,7 @@ These agents are independent. You don't need the full team.
 - Building a new product? Start with `architect DIAGNOSE`
 - Already have code, want it tested? `qa PLAN`
 - Shipping next week and worried about security? `security LAUNCH-AUDIT`
+- Need CI/CD or Docker setup? `devops PLAN`
 - Something's broken and you don't know why? `fullstack DEBUG`
 - Not sure which agent you need? `architect DIAGNOSE` — describe your situation
 
@@ -372,8 +375,8 @@ Edit the file to match your project's specifics — these are starting points, n
 ## Roadmap
 
 - [x] Stack-specific CLAUDE.md templates (Next.js, Rails, Node API)
+- [x] DevOps Agent — CI/CD, Docker, deployment strategy
 - [ ] More templates (Django, Go, Laravel)
-- [ ] DevOps Agent — CI/CD, Docker, deployment strategy
 - [ ] Data Agent — analytics instrumentation, KPI tracking
 - [ ] Performance Agent — profiling, optimization, load testing
 

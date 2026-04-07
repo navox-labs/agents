@@ -32,6 +32,11 @@ FULL STACK AGENT [MODE: BUILD]
   Receives: Arch doc + UI/UX specs + Security auth constraints
   Produces: working code + unit tests + auth implementation
     ↓
+DEVOPS AGENT [MODE: PIPELINE → DOCKERIZE → DEPLOY]
+  Receives: Arch doc + Full Stack code
+  Produces: CI/CD config, Dockerfile, deployment config
+  Secrets injected via platform — never hardcoded
+    ↓
   ┌─────────────────────────────────────┐
   │                                     │
 QA AGENT [MODE: TEST-RUN]              SECURITY AGENT [MODE: CODE-AUDIT]

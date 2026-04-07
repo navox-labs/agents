@@ -11,6 +11,7 @@ Every aspect of authentication has a single owner. No gaps, no overlaps.
 | Auth implementation (code) | Full Stack Agent |
 | Auth unit tests + edge cases | Full Stack Agent |
 | Auth flow testing (happy + unhappy paths) | QA Agent |
+| Deployment secrets management (env vars, secret rotation) | DevOps Agent |
 | Auth security constraints | Security Agent |
 | Auth code audit | Security Agent |
 | Auth launch sign-off | Security Agent |

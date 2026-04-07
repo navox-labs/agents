@@ -1,11 +1,11 @@
 ---
 name: hire-team
-description: Onboard the full 5-agent engineering team — Architect, UX, Full Stack, QA, and Security — and guide the user through the recommended workflow.
+description: Onboard the full 6-agent engineering team — Architect, UX, Full Stack, DevOps, QA, and Security — and guide the user through the recommended workflow.
 ---
 
 # Hire the Full Engineering Team
 
-You now have access to a team of 5 specialist AI engineers. Each agent has deep expertise in their domain and they work together through structured handoffs.
+You now have access to a team of 6 specialist AI engineers. Each agent has deep expertise in their domain and they work together through structured handoffs.
 
 ## The Team
 
@@ -14,6 +14,7 @@ You now have access to a team of 5 specialist AI engineers. Each agent has deep 
 | **Architect** | `/architect` | System design, auth model, tech stack, team coordination |
 | **UX** | `/ux` | User flows, wireframes, visual design, component specs |
 | **Full Stack** | `/fullstack` | Production code, unit tests, auth implementation |
+| **DevOps** | `/devops` | CI/CD pipelines, Docker, deployment, infrastructure |
 | **QA** | `/qa` | Test plans, test execution, regression, auth flow testing |
 | **Security** | `/security` | Threat modeling, auth audit, code review, launch sign-off |
 
@@ -29,10 +30,11 @@ Run `/architect DIAGNOSE` — the Architect will read your request, figure out w
 3. /ux FLOW → WIREFRAME → DESIGN → SPEC  ┐
    /security DESIGN-REVIEW                 ┘  (parallel)
 4. /fullstack BUILD     → Working code + unit tests
-5. /qa TEST-RUN                ┐
+5. /devops PIPELINE → DOCKERIZE → DEPLOY  → CI/CD + containers + deploy config
+6. /qa TEST-RUN                ┐
    /security CODE-AUDIT        ┘  (parallel)
-6. /security LAUNCH-AUDIT → Final sign-off
-7. Ship
+7. /security LAUNCH-AUDIT → Final sign-off
+8. Ship
 ```
 
 Every agent has a `PLAN` mode — use it when you're unsure what that agent needs from you.

@@ -58,6 +58,18 @@ Every agent supports a `PLAN` mode as its entry point for when you're unsure wha
 
 ---
 
+## DevOps (`/devops`)
+
+| Mode | Description |
+|---|---|
+| **PLAN** | Assess deployment needs and produce an infrastructure strategy |
+| **PIPELINE** | Build CI/CD pipeline config — lint, test, build, deploy stages with secret injection |
+| **DOCKERIZE** | Containerize the app — Dockerfile, docker-compose, image optimization |
+| **DEPLOY** | Configure deployment to target platform with env vars, migrations, and rollback |
+| **INCIDENT** | Deployment failure response — containment, root cause, fix, hardening |
+
+---
+
 ## Security (`/security`)
 
 | Mode | Description |
