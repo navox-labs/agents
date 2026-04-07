@@ -55,6 +55,69 @@ git clone https://github.com/navox-labs/agents.git /tmp/navox-agents && mkdir -p
 
 <br>
 
+## The agent brain
+
+```mermaid
+flowchart TD
+    CLI["`**$ /agency-run** your prompt here`"]
+
+    CLI -->|your prompt| AD
+
+    subgraph ARCH ["🏗️ Architect · Opus 4.6"]
+        AD["DIAGNOSE\nreads request · maps team · flags blockers"]
+        ADE["DESIGN\nstack · auth · API contracts · security · testing"]
+        AD -->|team plan| ADE
+    end
+
+    ADE -->|system design doc| G1
+
+    G1{{"⚠️ Gate 1\nyou review + approve"}}
+
+    G1 -->|auth + UX brief| UX
+    G1 -->|auth model + threats| SEC1
+
+    subgraph PARALLEL1 ["runs in parallel"]
+        UX["🎨 UI/UX · Sonnet 4.6\nFLOW → WIREFRAME → SPEC\nwireframes · component specs · all states"]
+        SEC1["🔐 Security · Opus 4.6\nDESIGN-REVIEW\nauth model · threat surface · constraints"]
+    end
+
+    UX -->|wireframes + specs| G2
+    SEC1 -->|auth constraints| G2
+
+    G2{{"⚠️ Gate 2\nyou approve — cleared to build"}}
+
+    G2 -->|cleared to build| FS1
+
+    FS1["⚙️ Full Stack · Sonnet 4.6\nBUILD\ncode + auth implementation + unit tests"]
+
+    FS1 -->|working code + tests| CP
+
+    CP{{"⚠️ Checkpoint\napp running locally · LGTM / FEEDBACK / STOP"}}
+
+    CP -->|code to test| QA
+    CP -->|code to audit| SEC2
+
+    subgraph PARALLEL2 ["runs in parallel"]
+        QA["🧪 QA · Sonnet 4.6\nTEST-RUN\n38 tests · auth matrix · edge cases"]
+        SEC2["🔐 Security · Opus 4.6\nCODE-AUDIT\nOWASP · auth bypass · vulns"]
+    end
+
+    QA -->|bug report| FS2
+    SEC2 -->|vulnerability report| FS2
+
+    FS2["⚙️ Full Stack · Sonnet 4.6\nFIXES\nall Critical findings resolved · clean push"]
+
+    FS2 -->|all findings resolved| G3
+
+    G3{{"⚠️ Gate 3\nSecurity LAUNCH-AUDIT · verdict"}}
+
+    G3 -->|APPROVED ✓| SHIP
+
+    SHIP["🚀 SHIP"]
+```
+
+<br>
+
 ## One prompt. Full team.
 
 You describe what you want. The Architect designs the system. UX and Security review the plan in parallel. Full Stack builds it — with tests. The app opens in your browser so you can see it running. QA hunts for bugs while Security audits the code. When everything passes, you ship.
