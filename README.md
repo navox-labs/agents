@@ -1,61 +1,70 @@
-<div align="center">
-
 # Navox Agents
 
-### You just hired 6 AI engineers. They start now.
-
-No platform. No login. No subscription.<br>
-Your code never leaves your machine.
+> A specialist AI engineering team for Claude Code.
+> 6 agents. No platform. No login. Your code never leaves your machine.
 
 [![GitHub stars](https://img.shields.io/github/stars/navox-labs/agents?style=social)](https://github.com/navox-labs/agents)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Built for Claude Code](https://img.shields.io/badge/Built_for-Claude_Code-blueviolet)](https://claude.ai)
 
-</div>
+---
 
-<br>
+## See it work first
 
-## Watch them build a game in 7 minutes
-
-> We gave the agents one prompt.<br>
-> 7 minutes later: a playable crab cookie clicker game.<br>
+> We gave the agents one prompt.
+> 7 minutes later: a playable crab cookie clicker game.
 > 1,330 lines. Zero dependencies. 6 bugs caught by QA.
->
-> [See the git history](https://github.com/navox-labs/nom/commits/main)
+> [🦀 Play nom.sh →](https://github.com/navox-labs/nom)
 
 ![Agents building nom.sh](assets/demo.gif)
 
-<br>
+---
 
-## Hire the team
+## Install
 
+**Global** — available in every project:
 ```bash
-# Global install — works in every project
-git clone https://github.com/navox-labs/agents.git && cp -r agents/.claude/agents/* ~/.claude/agents/ && cp -r agents/.claude/commands/* ~/.claude/commands/
+git clone https://github.com/navox-labs/agents.git
+cp -r agents/.claude/agents/* ~/.claude/agents/
+cp -r agents/.claude/commands/* ~/.claude/commands/
 ```
 
+**Project only:**
 ```bash
-# Or install into one project
-git clone https://github.com/navox-labs/agents.git /tmp/navox-agents && mkdir -p .claude/agents .claude/commands && cp -r /tmp/navox-agents/.claude/agents/* .claude/agents/ && cp -r /tmp/navox-agents/.claude/commands/* .claude/commands/ && rm -rf /tmp/navox-agents
+cp -r agents/.claude/agents/* .claude/agents/
+cp -r agents/.claude/commands/* .claude/commands/
 ```
 
-<br>
+---
+
+## Run your first build
+
+Open Claude Code in any project folder and run:
+
+```
+/agency-run Build a SaaS app with user auth, team billing, and an admin dashboard
+```
+
+That's it. The full team runs automatically.
+
+---
 
 ## The team
 
-| | Agent | Personality |
+| | Agent | What they do |
 |---|---|---|
-| 🏗️ | **Architect** | Thinks 10 steps ahead. Refuses to let you make the wrong call. |
-| 🎨 | **UI/UX** | Makes it beautiful. Won't ship a screen without every state covered. |
-| ⚙️ | **Full Stack** | Moves fast. Tests everything. Writes code your future self won't hate. |
-| 🧪 | **QA** | Finds the bugs you didn't know existed. Nothing ships without their sign-off. |
-| 🔐 | **Security** | Thinks like a hacker. Sleeps better than you do. |
-| 🚀 | **DevOps** | Automates everything that runs twice. Secrets never touch the code. |
-| 🎮 | **Orchestrator** (`/agency-run`) | One prompt. Full team. Done. |
+| 🏗️ | **Architect** | Designs the system. Picks the stack. Defines auth. |
+| 🎨 | **UI/UX** | Maps user flows. Specs every screen and state. |
+| ⚙️ | **Full Stack** | Builds it. Tests it. Ships clean code. |
+| 🚀 | **DevOps** | CI/CD. Docker. Deploys. Secrets never touch code. |
+| 🧪 | **QA** | Finds every bug. Auth flows get extra scrutiny. |
+| 🔐 | **Security** | Audits everything. Nothing launches without a verdict. |
 
-<br>
+Use one agent directly: `architect DIAGNOSE`, `security LAUNCH-AUDIT`, `qa PLAN`
 
-## The agent brain
+---
+
+## How it works
 
 ```mermaid
 flowchart TD
@@ -116,47 +125,37 @@ flowchart TD
     SHIP["🚀 SHIP"]
 ```
 
-<br>
+---
 
-## One prompt. Full team.
+## You stay in control
 
-You describe what you want. The Architect designs the system. UX and Security review the plan in parallel. Full Stack builds it — with tests. The app opens in your browser so you can see it running. QA hunts for bugs while Security audits the code. When everything passes, you ship.
-
-**The human stays in control. Every critical decision waits for your approval.**
-
-<br>
-
-## You're always in control
-
-- Agents stop at critical decisions and wait for you
-- Nothing destructive runs without your explicit approval
-- You can redirect, reject, or stop at any point
+1. Agents pause at every gate and wait for your approval
+2. Nothing destructive runs without your explicit sign-off
+3. You can redirect, reject, or stop at any point
 
 Full guide: [docs/hitl.md](docs/hitl.md)
 
-<br>
+---
 
-## Start with your stack
+## Stack templates
 
-Pre-built `CLAUDE.md` templates so agents understand your stack from the first session.
+Drop a pre-built `CLAUDE.md` into your project so agents know your stack immediately:
 
+```bash
+cp templates/nextjs.CLAUDE.md your-project/CLAUDE.md     # Next.js 15 + Prisma + Supabase Auth
+cp templates/node-api.CLAUDE.md your-project/CLAUDE.md    # Express + JWT + Redis + Railway
+cp templates/rails.CLAUDE.md your-project/CLAUDE.md       # Rails 8 + Devise + Sidekiq + Render
 ```
-templates/nextjs.CLAUDE.md      — Next.js 15, TypeScript, Tailwind, Prisma, Supabase Auth
-templates/node-api.CLAUDE.md    — Express, TypeScript, Prisma, JWT, Redis, Railway
-templates/rails.CLAUDE.md       — Rails 8, PostgreSQL, Devise, Sidekiq, Render
-```
 
-<br>
+---
 
 ## What this is not
 
-- Not a web platform. There's no dashboard to log into.
-- Not a SaaS. There's no subscription or usage limit.
-- Not a plugin. There's nothing to configure in your editor.
-- Not storing your data. Your code runs through Claude Code locally.
+- Not a platform. No dashboard, no login.
+- Not a SaaS. No subscription, no usage limit.
+- Not a plugin. Nothing to configure in your editor.
+- Not storing your data. Everything runs locally through Claude Code.
 - Not autonomous. You stay in the loop.
-
-<br>
 
 ---
 
