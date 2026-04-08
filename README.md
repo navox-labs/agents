@@ -6,6 +6,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/navox-labs/agents?style=social)](https://github.com/navox-labs/agents)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Built for Claude Code](https://img.shields.io/badge/Built_for-Claude_Code-blueviolet)](https://claude.ai)
+![navox-agents](https://github.com/user-attachments/assets/9fa925d1-43e0-4a53-9272-57e53d9d373f)
 
 ---
 
@@ -15,8 +16,6 @@
 > 7 minutes later: a playable crab cookie clicker game.
 > 1,330 lines. Zero dependencies. 6 bugs caught by QA.
 > [🦀 Play nom.sh →](https://github.com/navox-labs/nom)
-
-> 🎬 Demo GIF coming soon — [watch the nom.sh build on GitHub](https://github.com/navox-labs/nom)
 
 ---
 
