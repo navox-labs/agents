@@ -39,6 +39,12 @@ cp -r agents/.claude/commands/* .claude/commands/
 
 ## Install as a plugin (one command)
 
+If you hit an SSH error, run this first (one time):
+```bash
+git config --global url."https://github.com/".insteadOf "git@github.com:"
+```
+
+Then install:
 ```
 /plugin marketplace add https://github.com/navox-labs/agents
 /plugin install navox@navox-labs
