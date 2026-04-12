@@ -1,7 +1,7 @@
 # Navox Agents
 
 > A specialist AI engineering team for Claude Code.
-> 6 agents. No platform. No login. Your code never leaves your machine.
+> 8 agents. No platform. No login. Your code never leaves your machine.
 
 [![GitHub stars](https://img.shields.io/github/stars/navox-labs/agents?style=social)](https://github.com/navox-labs/agents)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -104,6 +104,9 @@ flowchart TD
     FS1["⚙️ Full Stack · Sonnet 4.6\nBUILD\ncode + auth implementation + unit tests"]
 
     FS1 -->|working code + tests| CP
+    FS1 -->|build in progress| DEMO
+    DEMO["🎬 Demo · Sonnet 4.6\nCAPTURE\nscreenshots each phase · builds manifest"]
+    DEMO -->|manifest ready| CP
 
     CP{{"⚠️ Checkpoint\napp running locally · LGTM / FEEDBACK / STOP"}}
 
@@ -124,7 +127,9 @@ flowchart TD
 
     G3{{"⚠️ Gate 3\nSecurity LAUNCH-AUDIT · verdict"}}
 
-    G3 -->|APPROVED ✓| SHIP
+    G3 -->|APPROVED ✓| DEVOPS
+    DEVOPS["🚀 DevOps · Sonnet 4.6\nDEPLOY\nVercel + Cloudflare · README written · video rendered"]
+    DEVOPS -->|live URL + video| SHIP
 
     SHIP["🚀 SHIP"]
 ```
@@ -141,6 +146,8 @@ flowchart TD
 | 🚀 | **DevOps** | CI/CD. Docker. Deploys. Secrets never touch code. |
 | 🧪 | **QA** | Finds every bug. Auth flows get extra scrutiny. |
 | 🔐 | **Security** | Audits everything. Nothing launches without a verdict. |
+| 🎬 | **Demo** | Captures screenshots during build. Renders 60-second demo video. |
+| 🎥 | **DevOps** | Deploys to Vercel + Cloudflare Workers. Writes README. Ships live. |
 
 Use one agent directly: `architect DIAGNOSE`, `security LAUNCH-AUDIT`, `qa PLAN`
 
@@ -166,14 +173,11 @@ Tell the agents your stack once — they'll know it every session.
 After installing the agents globally, run this from inside your project folder:
 
 ```bash
-# Next.js + TypeScript + Tailwind + Supabase
-cp ~/.claude/templates/nextjs.CLAUDE.md ./CLAUDE.md
-
-# Node.js + Express + JWT + Redis
-cp ~/.claude/templates/node-api.CLAUDE.md ./CLAUDE.md
-
-# Rails 8 + Devise + Sidekiq
-cp ~/.claude/templates/rails.CLAUDE.md ./CLAUDE.md
+cp ~/.claude/templates/nextjs.CLAUDE.md ./CLAUDE.md          # Next.js + Vercel
+cp ~/.claude/templates/node-api.CLAUDE.md ./CLAUDE.md        # Node.js + Express
+cp ~/.claude/templates/rails.CLAUDE.md ./CLAUDE.md           # Rails 8
+cp ~/.claude/templates/python-fastapi.CLAUDE.md ./CLAUDE.md  # Python + FastAPI
+cp ~/.claude/templates/cloudflare-workers.CLAUDE.md ./CLAUDE.md  # Cloudflare Workers
 ```
 
 Pick one. The agents read it automatically when Claude Code opens.
