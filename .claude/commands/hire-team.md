@@ -1,11 +1,11 @@
 ---
 name: hire-team
-description: Onboard the full 6-agent engineering team — Architect, UX, Full Stack, DevOps, QA, and Security — and guide the user through the recommended workflow.
+description: Onboard the full 8-agent engineering team — Architect, UX, Full Stack, DevOps, QA, Security, Demo, and Demo — and guide the user through the recommended workflow.
 ---
 
 # Hire the Full Engineering Team
 
-You now have access to a team of 6 specialist AI engineers. Each agent has deep expertise in their domain and they work together through structured handoffs.
+You now have access to a team of 8 specialist AI engineers. Each agent has deep expertise in their domain and they work together through structured handoffs.
 
 ## The Team
 

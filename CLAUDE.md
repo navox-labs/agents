@@ -64,7 +64,7 @@ navox-labs/agents/
 │   │   └── local-review.md            ← human checkpoint between build and QA
 │   │
 │   ├── commands/                      ← slash commands (orchestration)
-│   │   ├── hire-team.md               ← /hire-team (runs all 5 agents)
+│   │   ├── hire-team.md               ← /hire-team (runs all 8 agents)
 │   │   └── agency-run.md              ← /agency-run (full team orchestrator)
 │   │
 │   ├── memory/                        ← per-agent memory files (created at runtime)
@@ -127,7 +127,7 @@ Every file in `.claude/commands/` uses the same frontmatter format as agents.
 The `hire-team` command should:
 1. Briefly explain what the full team does
 2. Instruct the user to start with `/architect DIAGNOSE` if unsure
-3. List all 5 agents with their primary slash command
+3. List all 8 agents with their primary slash command
 4. Show the recommended handoff order
 
 ---
