@@ -19,7 +19,9 @@
 
 ---
 
-## Install
+## Install as a Claude Code plugin
+
+Navox Agents is available on Claude Code's plugin marketplace. This is the fastest way to get started — no cloning, no copying files.
 
 If you hit an SSH error, run this first (one time):
 ```bash
