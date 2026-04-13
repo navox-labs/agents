@@ -10,6 +10,6 @@
   "repository": "https://github.com/navox-labs/agents",
   "license": "MIT",
   "keywords": ["agents", "engineering", "devtools", "claude-code"],
-  "agents": ".claude/agents/",
-  "commands": [".claude/commands/hire-team.md", ".claude/commands/agency-run.md"]
+  "agents": "./.claude/agents/",
+  "commands": ["./.claude/commands/hire-team.md", "./.claude/commands/agency-run.md"]
 }
