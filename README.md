@@ -21,6 +21,24 @@
 
 ## Install
 
+If you hit an SSH error, run this first (one time):
+```bash
+git config --global url."https://github.com/".insteadOf "git@github.com:"
+```
+
+Then install:
+```
+/plugin marketplace add https://github.com/navox-labs/agents
+/plugin install navox-agents
+/reload-plugins
+```
+
+> **Note:** Plugin commands are namespaced. Use `/navox-agents:agency-run` and `/navox-agents:hire-team` instead of `/agency-run` and `/hire-team`. If you installed via the manual copy method below, no namespace is needed.
+
+---
+
+## Alternative: manual install
+
 **Global** — available in every project:
 ```bash
 git clone https://github.com/navox-labs/agents.git
@@ -37,39 +55,21 @@ git clone https://github.com/navox-labs/agents.git /tmp/navox-agents && mkdir -p
 
 ---
 
-## Install as a plugin (one command)
-
-If you hit an SSH error, run this first (one time):
-```bash
-git config --global url."https://github.com/".insteadOf "git@github.com:"
-```
-
-Then install:
-```
-/plugin marketplace add https://github.com/navox-labs/agents
-/plugin install navox-agents
-/reload-plugins
-```
-
-> **Note:** Plugin commands are namespaced. Use `/navox-agents:agency-run` and `/navox-agents:hire-team` instead of `/agency-run` and `/hire-team`. If you installed via the global/project copy method above, no namespace is needed.
-
----
-
 ## Run your first build
 
 Open Claude Code in any project folder and run:
 
-**If you installed globally (copy method):**
+**If you installed as a plugin:**
 ```
-/agency-run Build a {browser-based} {Cookie Clicker game}
+/navox-agents:agency-run Build a {browser-based} {Cookie Clicker game}
 with {Atari pixel art} vibes where {crabs eat cookies}.
 No authentication. No backend. Single HTML file,
 runs in any browser. Make it {addictive} and {funny}.
 ```
 
-**If you installed as a plugin:**
+**If you installed manually (copy method):**
 ```
-/navox-agents:agency-run Build a {browser-based} {Cookie Clicker game}
+/agency-run Build a {browser-based} {Cookie Clicker game}
 with {Atari pixel art} vibes where {crabs eat cookies}.
 No authentication. No backend. Single HTML file,
 runs in any browser. Make it {addictive} and {funny}.
