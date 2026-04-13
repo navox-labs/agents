@@ -31,8 +31,7 @@ cp -r agents/templates ~/.claude/templates
 
 **Project only:**
 ```bash
-cp -r agents/.claude/agents/* .claude/agents/
-cp -r agents/.claude/commands/* .claude/commands/
+git clone https://github.com/navox-labs/agents.git /tmp/navox-agents && mkdir -p .claude/agents .claude/commands && cp -r /tmp/navox-agents/.claude/agents/* .claude/agents/ && cp -r /tmp/navox-agents/.claude/commands/* .claude/commands/ && rm -rf /tmp/navox-agents
 ```
 
 ---
