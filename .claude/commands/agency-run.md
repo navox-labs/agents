@@ -41,6 +41,7 @@ EXECUTION ORDER:
 Group 1 (sequential): architect — DIAGNOSE + DESIGN
 Group 2 (parallel):   ux, security — UX specs + DESIGN-REVIEW
 Group 3 (sequential): fullstack — BUILD
+Group 3b (parallel): demo — CAPTURE (starts silently alongside fullstack, never blocks)
 Group 4 (sequential): local-review — HUMAN CHECKPOINT (mandatory, never skip)
 Group 5 (parallel):   qa, security — TEST-RUN + CODE-AUDIT (only after local-review LGTM)
 Group 6 (sequential): security — LAUNCH-AUDIT
@@ -144,6 +145,11 @@ Print a clean summary:
 - Key decisions recorded in .claude/project-memory.md
 
 ## Rules
+- Before selecting agents, ask the owner two questions and wait for answers:
+  1. "Activate Demo Agent? It captures screenshots during the build and renders a 60-second video. (Y/N)"
+  2. "Deploy when done? Vercel for frontend + Cloudflare Workers for backend. (Y/N)"
+  If Demo is Y, include demo agent in Group 3b.
+  If Deploy is Y, add devops agent as Group 7 after LAUNCH-AUDIT.
 - Always read project memory before starting — never repeat work already done
 - Always update project memory after completing — this is the team's institutional memory
 - Always run local-review after Fullstack BUILD — never skip the human checkpoint
