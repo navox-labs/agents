@@ -59,7 +59,7 @@ navox-labs/agents/
 │   │   ├── architect.md               ← _architect (agent)
 │   │   ├── devops.md                  ← _devops (agent)
 │   │   ├── fullstack.md               ← _fullstack (agent)
-│   │   ├── installer.md               ← installer (agent, no underscore — no command wrapper)
+│   │   ├── installer.md               ← _installer (agent, auto-dispatched — no command wrapper)
 │   │   ├── local-review.md            ← local-review (agent, invoked by agency-run)
 │   │   ├── qa.md                      ← _qa (agent)
 │   │   ├── security.md                ← _security (agent)
