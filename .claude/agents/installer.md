@@ -1,5 +1,5 @@
 ---
-name: installer
+name: _installer
 description: Browse and install individual Navox agents. Trigger on install agent, add agent, which agent do I need, get architect, get security.
 tools: Read, Write, Bash, Glob
 model: claude-sonnet-4-6

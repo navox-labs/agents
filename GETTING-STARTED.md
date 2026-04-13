@@ -1,6 +1,6 @@
 # Your first engineering team
 
-You just got access to a team of 5 specialist engineers who work for you, inside Claude Code, for free.
+You just got access to a team of 8 specialist AI agents who work for you, inside Claude Code, for free.
 
 This guide explains who they are, how a real engineering team works, and how to use them — even if you've never worked with other engineers before.
 
@@ -38,33 +38,48 @@ This is the process. Without it, you get: code that doesn't scale, UX decisions 
 
 Each agent is a specialist who owns one part of that process:
 
-| Agent | Real-world equivalent | Their job |
-|---|---|---|
-| 🏗️ Architect | Principal Engineer | Designs the system before code is written |
-| 🎨 UX | Product Designer | Specifies every screen, state, and interaction |
-| 🔐 Security | Security Engineer | Reviews design + audits code before launch |
-| ⚙️ Full Stack | Senior Developer | Writes production code with tests |
-| 👁️ Local Review | local-review | Starts the app, shows it to you, waits for your approval |
-| 🧪 QA | QA Engineer | Finds everything that can break |
+| | Agent | Real-world equivalent | Their job |
+|---|---|---|---|
+| 🏗️ | Architect | Principal Engineer | Designs the system before code is written |
+| 🎨 | UX | Product Designer | Specifies every screen, state, and interaction |
+| ⚙️ | Full Stack | Senior Developer | Writes production code with tests |
+| 🚀 | DevOps | DevOps Engineer | CI/CD, Docker, deploys to production |
+| 👁️ | Local Review | Code Reviewer | Starts the app, shows it to you, waits for your approval |
+| 🧪 | QA | QA Engineer | Finds everything that can break |
+| 🔐 | Security | Security Engineer | Reviews design + audits code before launch |
+| 📦 | Installer | Setup Wizard | Helps you discover and install individual agents |
 
 The orchestrator (`/agency-run`) is like a project manager — it runs the team in the right order so you don't have to.
 
 ---
 
-## Install: 3 commands
+## Install
 
-Open your terminal:
+**Step 1 — install as a Claude Code plugin:**
 
+If you hit an SSH error, run this first (one time):
 ```bash
-# Step 1 — download the team
-git clone https://github.com/navox-labs/agents.git
+git config --global url."https://github.com/".insteadOf "git@github.com:"
+```
 
-# Step 2 — install globally so they work in every project
-cp -r agents/.claude/agents/* ~/.claude/agents/
-cp -r agents/.claude/commands/* ~/.claude/commands/
+Then in Claude Code:
+```
+/plugin marketplace add https://github.com/navox-labs/agents
+/plugin install navox-agents
+/reload-plugins
 ```
 
 That's it. No npm install. No API key. No account.
+
+**Alternative: manual install (for customization)**
+
+```bash
+git clone https://github.com/navox-labs/agents.git
+mkdir -p ~/.claude/agents ~/.claude/commands ~/.claude/templates
+cp -r agents/.claude/agents/* ~/.claude/agents/
+cp -r agents/.claude/commands/* ~/.claude/commands/
+cp -r agents/templates/* ~/.claude/templates/
+```
 
 **Verify it worked:**
 
@@ -74,7 +89,7 @@ ls ~/.claude/agents/
 
 You should see:
 ```
-architect.md  fullstack.md  qa.md  security.md  ux.md
+architect.md  devops.md  fullstack.md  installer.md  local-review.md  qa.md  security.md  ux.md
 ```
 
 ---
@@ -217,8 +232,7 @@ The Architect reads your situation and tells you exactly which agents to use and
 
 ## What the agents won't do
 
-- They won't deploy your app. Deployment is still your job.
-- They won't buy a domain or set up hosting.
+- They won't buy a domain or set up hosting accounts — but the DevOps agent can deploy your app to platforms like Vercel and Cloudflare Workers if you ask.
 - They won't make product decisions — they build what you tell them to build.
 - They won't remember things you told them outside of Claude Code or outside of the memory files.
 

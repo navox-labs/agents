@@ -5,7 +5,7 @@ description: Onboard the full 7-agent engineering team — Architect, UX, Full S
 
 # Hire the Full Engineering Team
 
-You now have access to a team of 7 specialist AI engineers. Each agent has deep expertise in their domain and they work together through structured handoffs.
+You now have access to a team of 8 specialist AI agents. Each agent has deep expertise in their domain and they work together through structured handoffs.
 
 ## The Team
 
@@ -15,8 +15,10 @@ You now have access to a team of 7 specialist AI engineers. Each agent has deep 
 | **UX** | `/ux` | User flows, wireframes, visual design, component specs |
 | **Full Stack** | `/fullstack` | Production code, unit tests, auth implementation |
 | **DevOps** | `/devops` | CI/CD pipelines, Docker, deployment, infrastructure |
+| **Local Review** | *(auto, via /agency-run)* | Starts app locally, human checkpoint before QA |
 | **QA** | `/qa` | Test plans, test execution, regression, auth flow testing |
 | **Security** | `/security` | Threat modeling, auth audit, code review, launch sign-off |
+| **Installer** | *(auto-dispatched)* | Discover and install individual agents or templates |
 
 ## Not sure where to start?
 
@@ -30,11 +32,12 @@ Run `/architect DIAGNOSE` — the Architect will read your request, figure out w
 3. /ux FLOW → WIREFRAME → DESIGN → SPEC  ┐
    /security DESIGN-REVIEW                 ┘  (parallel)
 4. /fullstack BUILD     → Working code + unit tests
-5. /devops PIPELINE → DOCKERIZE → DEPLOY  → CI/CD + containers + deploy config
+5. Local Review         → Human checkpoint (LGTM / FEEDBACK / STOP)
 6. /qa TEST-RUN                ┐
    /security CODE-AUDIT        ┘  (parallel)
 7. /security LAUNCH-AUDIT → Final sign-off
-8. Ship
+8. /devops DEPLOY       → CI/CD + deploy (if requested)
+9. Ship
 ```
 
 Every agent has a `PLAN` mode — use it when you're unsure what that agent needs from you.

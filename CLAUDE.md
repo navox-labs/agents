@@ -7,7 +7,7 @@ Read this entire file before touching any file in this repo.
 
 ## What this repo is
 
-A collection of Claude Code subagents — 5 specialist AI engineers that run entirely inside Claude Code sessions. No platform, no login, no data stored. Engineers install them globally or per project and hire them via slash commands.
+A collection of Claude Code subagents — 8 specialist AI agents (7 engineers + 1 installer utility) that run entirely inside Claude Code sessions. No platform, no login, no data stored. Engineers install them globally or per project and hire them via slash commands.
 
 This repo is open source under MIT. It lives at `github.com/navox-labs/agents`.
 
@@ -49,34 +49,56 @@ This is the required structure. Do not deviate.
 ```
 navox-labs/agents/
 │
-├── CLAUDE.md                          ← this file
-├── README.md                          ← public-facing documentation
-├── GETTING-STARTED.md                 ← junior engineer onboarding guide
-├── LICENSE                            ← MIT license
+├── CLAUDE.md
+├── README.md
+├── GETTING-STARTED.md
+├── LICENSE
 │
 ├── .claude/
 │   ├── agents/                        ← subagent definitions (one file per agent)
-│   │   ├── architect.md               ← /architect
-│   │   ├── fullstack.md               ← /fullstack
-│   │   ├── ux.md                      ← /ux
-│   │   ├── qa.md                      ← /qa
-│   │   ├── security.md                ← /security
-│   │   └── local-review.md            ← human checkpoint between build and QA
+│   │   ├── architect.md               ← _architect (agent)
+│   │   ├── devops.md                  ← _devops (agent)
+│   │   ├── fullstack.md               ← _fullstack (agent)
+│   │   ├── installer.md               ← installer (agent, no underscore — no command wrapper)
+│   │   ├── local-review.md            ← local-review (agent, invoked by agency-run)
+│   │   ├── qa.md                      ← _qa (agent)
+│   │   ├── security.md                ← _security (agent)
+│   │   └── ux.md                      ← _ux (agent)
 │   │
-│   ├── commands/                      ← slash commands (orchestration)
-│   │   ├── hire-team.md               ← /hire-team (runs all 8 agents)
-│   │   └── agency-run.md              ← /agency-run (full team orchestrator)
+│   ├── commands/                      ← slash commands
+│   │   ├── agency-run.md              ← /agency-run (orchestrator)
+│   │   ├── architect.md               ← /architect (command wrapper → _architect)
+│   │   ├── devops.md                  ← /devops (command wrapper → _devops)
+│   │   ├── fullstack.md               ← /fullstack (command wrapper → _fullstack)
+│   │   ├── hire-team.md               ← /hire-team (onboarding)
+│   │   ├── qa.md                      ← /qa (command wrapper → _qa)
+│   │   ├── security.md               ← /security (command wrapper → _security)
+│   │   └── ux.md                      ← /ux (command wrapper → _ux)
 │   │
 │   ├── memory/                        ← per-agent memory files (created at runtime)
 │   │   └── [agent].md
 │   │
-│   └── project-memory.md             ← shared project memory (created at runtime)
+│   ├── project-memory.md             ← shared project memory (created at runtime)
+│   └── settings.local.json           ← local permission overrides
+│
+├── .claude-plugin/
+│   ├── plugin.json                    ← plugin manifest for marketplace distribution
+│   └── marketplace.json               ← marketplace registry
+│
+├── templates/                         ← starter CLAUDE.md files per stack
+│   ├── nextjs.CLAUDE.md
+│   ├── node-api.CLAUDE.md
+│   ├── rails.CLAUDE.md
+│   ├── python-fastapi.CLAUDE.md
+│   └── cloudflare-workers.CLAUDE.md
 │
 └── docs/
-    ├── modes.md                       ← all modes for all agents explained
+    ├── modes.md                       ← all modes for all agents
     ├── auth-ownership.md              ← auth responsibility table
     ├── handoff-chain.md               ← agent handoff flow diagram
-    └── install.md                     ← detailed install instructions
+    ├── hitl.md                        ← human-in-the-loop guide
+    ├── parallel-execution.md          ← parallel agent execution guide
+    └── install.md                     ← installation instructions
 ```
 
 If a file or folder does not exist in this structure, create it.
@@ -102,22 +124,33 @@ description: One sentence. What this agent does and when Claude should load it a
 
 | Field | Rule |
 |---|---|
-| `name` | Lowercase kebab-case. Becomes the slash command. No spaces. |
+| `name` | Lowercase. Agents use underscore prefix (`_architect`). Commands use plain name (`architect`). |
 | `description` | One sentence. Used by Claude to auto-load the agent. Must include trigger keywords. |
-| No other fields | Do not add model, temperature, or any other frontmatter fields. |
+| `model` | Required for agents. `claude-opus-4-6` for Architect + Security. `claude-sonnet-4-6` for all others. |
+| `tools` | Required for agents. Comma-separated list of allowed tools (Read, Write, Edit, Bash, Glob, Grep, WebSearch). |
 
 ### Agent name → slash command mapping
 
-| File | name field | Slash command |
-|---|---|---|
-| architect.md | `architect` | `/architect` |
-| fullstack.md | `fullstack` | `/fullstack` |
-| ux.md | `ux` | `/ux` |
-| qa.md | `qa` | `/qa` |
-| security.md | `security` | `/security` |
-| local-review.md | `local-review` | invoked by agency-run between BUILD and QA |
-| hire-team.md | `hire-team` | `/hire-team` |
-| agency-run.md | `agency-run` | `/agency-run` |
+Agents use the underscore-prefix pattern to avoid name collision with command wrappers (see project-memory.md for history).
+
+| File | name field | Type | Slash command |
+|---|---|---|---|
+| architect.md | `_architect` | agent | via `/architect` command wrapper |
+| devops.md | `_devops` | agent | via `/devops` command wrapper |
+| fullstack.md | `_fullstack` | agent | via `/fullstack` command wrapper |
+| qa.md | `_qa` | agent | via `/qa` command wrapper |
+| security.md | `_security` | agent | via `/security` command wrapper |
+| ux.md | `_ux` | agent | via `/ux` command wrapper |
+| installer.md | `_installer` | agent | auto-dispatched by Claude (no wrapper) |
+| local-review.md | `local-review` | agent | invoked by agency-run (no wrapper) |
+| agency-run.md | `agency-run` | command | `/agency-run` |
+| hire-team.md | `hire-team` | command | `/hire-team` |
+| architect.md (commands/) | `architect` | command wrapper | `/architect` → reads `_architect` |
+| devops.md (commands/) | `devops` | command wrapper | `/devops` → reads `_devops` |
+| fullstack.md (commands/) | `fullstack` | command wrapper | `/fullstack` → reads `_fullstack` |
+| qa.md (commands/) | `qa` | command wrapper | `/qa` → reads `_qa` |
+| security.md (commands/) | `security` | command wrapper | `/security` → reads `_security` |
+| ux.md (commands/) | `ux` | command wrapper | `/ux` → reads `_ux` |
 
 ---
 
@@ -139,7 +172,7 @@ The `hire-team` command should:
 | `modes.md` | Every agent listed, every mode listed, one-line description per mode |
 | `auth-ownership.md` | The full auth ownership table — all 10 rows, all agents |
 | `handoff-chain.md` | The full chain: DIAGNOSE → DESIGN → parallel tracks → BUILD → parallel QA+Security → LAUNCH-AUDIT → SHIP |
-| `install.md` | Global install, project install, verification steps, uninstall |
+| `install.md` | Plugin install, manual install, verification steps, uninstall |
 
 ---
 
@@ -148,7 +181,7 @@ The `hire-team` command should:
 The README is the public landing page. Keep it sharp.
 
 - First 3 lines must communicate: what it is, who it's for, how to install
-- The team table must stay at the top — 5 rows, one per agent
+- The team table must stay at the top — 8 rows, one per agent
 - Install block must always show a working copy command
 - Never remove the "What this is not" section — it's a key differentiator
 - The auth ownership table must stay complete
@@ -195,8 +228,9 @@ This file is written for junior engineers who have never worked in a team before
 
 Before committing any changes, verify:
 
-- [ ] All 6 agent files exist in `.claude/agents/`
-- [ ] All agent files have valid frontmatter (`name` + `description`)
+- [ ] All 8 agent files exist in `.claude/agents/`
+- [ ] All agent files have valid frontmatter (`name` + `description` + `model` + `tools` where applicable)
+- [ ] All 6 command wrappers exist in `.claude/commands/` and reference the correct agent file
 - [ ] `hire-team.md` exists in `.claude/commands/`
 - [ ] `agency-run.md` exists in `.claude/commands/`
 - [ ] `local-review.md` exists in `.claude/agents/`
@@ -210,13 +244,13 @@ Before committing any changes, verify:
 Run this to verify agent files are present:
 ```bash
 ls .claude/agents/
-# Expected: architect.md  fullstack.md  local-review.md  qa.md  security.md  ux.md
+# Expected: architect.md  devops.md  fullstack.md  installer.md  local-review.md  qa.md  security.md  ux.md
 
 ls .claude/commands/
-# Expected: agency-run.md  hire-team.md
+# Expected: agency-run.md  architect.md  devops.md  fullstack.md  hire-team.md  qa.md  security.md  ux.md
 
 ls docs/
-# Expected: auth-ownership.md  handoff-chain.md  install.md  modes.md
+# Expected: auth-ownership.md  handoff-chain.md  hitl.md  install.md  modes.md  parallel-execution.md
 ```
 
 ---

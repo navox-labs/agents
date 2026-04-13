@@ -35,24 +35,20 @@ Then install:
 /reload-plugins
 ```
 
+> If this saves you time, [⭐ star the repo](https://github.com/navox-labs/agents) — it helps others find it.
+
 > **Note:** Plugin commands are namespaced. Use `/navox-agents:agency-run` and `/navox-agents:hire-team` instead of `/agency-run` and `/hire-team`. If you installed via the manual copy method below, no namespace is needed.
 
 ---
 
-## Alternative: manual install
+## Alternative: manual install (for customization)
 
-**Global** — available in every project:
 ```bash
 git clone https://github.com/navox-labs/agents.git
 mkdir -p ~/.claude/agents ~/.claude/commands ~/.claude/templates
 cp -r agents/.claude/agents/* ~/.claude/agents/
 cp -r agents/.claude/commands/* ~/.claude/commands/
 cp -r agents/templates/* ~/.claude/templates/
-```
-
-**Project only:**
-```bash
-git clone https://github.com/navox-labs/agents.git /tmp/navox-agents && mkdir -p .claude/agents .claude/commands && cp -r /tmp/navox-agents/.claude/agents/* .claude/agents/ && cp -r /tmp/navox-agents/.claude/commands/* .claude/commands/ && rm -rf /tmp/navox-agents
 ```
 
 ---
@@ -154,8 +150,10 @@ flowchart TD
 | 🎨 | **UI/UX** | Maps user flows. Specs every screen and state. |
 | ⚙️ | **Full Stack** | Builds it. Tests it. Ships clean code. |
 | 🚀 | **DevOps** | CI/CD. Docker. Deploys. Secrets never touch code. |
+| 👁️ | **Local Review** | Starts the app. Shows it to you. Waits for your go. |
 | 🧪 | **QA** | Finds every bug. Auth flows get extra scrutiny. |
 | 🔐 | **Security** | Audits everything. Nothing launches without a verdict. |
+| 📦 | **Installer** | Helps you discover and install individual agents. |
 
 Use one agent directly: `/architect DIAGNOSE`, `/security LAUNCH-AUDIT`, `/qa PLAN`
 (Plugin users: prefix with `navox-agents:` e.g. `/navox-agents:architect DIAGNOSE`)
@@ -197,7 +195,7 @@ Pick one. The agents read it automatically when Claude Code opens.
 
 - Not a platform. No dashboard, no login.
 - Not a SaaS. No subscription, no usage limit.
-- Not a plugin. Nothing to configure in your editor.
+- Not a walled garden. It's a plugin, but the source is open — fork it, customize the prompts, make it yours.
 - Not storing your data. Everything runs locally through Claude Code.
 - Not autonomous. You stay in the loop.
 

@@ -70,6 +70,22 @@ Every agent supports a `PLAN` mode as its entry point for when you're unsure wha
 
 ---
 
+## Installer (`/installer` or auto-dispatched)
+
+| Mode | Description |
+|---|---|
+| *(no named modes)* | Lists available agents, installs agents globally or per-project, installs starter templates, verifies installation, recommends which agent to start with |
+
+---
+
+## Local Review (invoked by `/agency-run`)
+
+| Mode | Description |
+|---|---|
+| **REVIEW** | Starts the local dev server, opens the browser, takes a screenshot, and waits for human verdict (LGTM / FEEDBACK / STOP) before the chain continues |
+
+---
+
 ## Security (`/security`)
 
 | Mode | Description |
