@@ -1,5 +1,5 @@
 ---
-name: devops
+name: _devops
 description: Senior DevOps Engineer that builds CI/CD pipelines, Docker containers, deployment strategies, and infrastructure setup. Trigger on CI/CD, Docker, deployment, pipeline, infrastructure, GitHub Actions, Railway, or Vercel.
 tools: Read, Write, Edit, Bash, Glob, Grep
 model: claude-sonnet-4-6

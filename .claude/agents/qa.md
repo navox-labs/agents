@@ -1,5 +1,5 @@
 ---
-name: qa
+name: _qa
 description: Senior QA Engineer that creates test plans and executes comprehensive testing including auth flows and edge cases. Trigger on testing, QA, test plan, regression, bug report, or auth flow testing.
 tools: Read, Glob, Grep, Bash
 model: claude-sonnet-4-6

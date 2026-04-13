@@ -20,5 +20,14 @@
     "./.claude/agents/security.md",
     "./.claude/agents/ux.md"
   ],
-  "commands": ["./.claude/commands/hire-team.md", "./.claude/commands/agency-run.md"]
+  "commands": [
+    "./.claude/commands/hire-team.md",
+    "./.claude/commands/agency-run.md",
+    "./.claude/commands/architect.md",
+    "./.claude/commands/fullstack.md",
+    "./.claude/commands/ux.md",
+    "./.claude/commands/qa.md",
+    "./.claude/commands/security.md",
+    "./.claude/commands/devops.md"
+  ]
 }

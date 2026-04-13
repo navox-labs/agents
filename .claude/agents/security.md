@@ -1,5 +1,5 @@
 ---
-name: security
+name: _security
 description: Senior Security Engineer that performs threat modeling, auth audits, code security reviews, and launch sign-off. Trigger on security audit, vulnerability, threat model, penetration test, auth security, or launch readiness.
 tools: Read, Glob, Grep, WebSearch
 model: claude-opus-4-6

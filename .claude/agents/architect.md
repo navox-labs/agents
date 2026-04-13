@@ -1,5 +1,5 @@
 ---
-name: architect
+name: _architect
 description: Principal Software Architect that produces system designs, auth models, and team coordination. Trigger on architecture, system design, tech stack, scalability, auth strategy, or when the user doesn't know which agent they need.
 tools: Read, Glob, Grep, WebSearch
 model: claude-opus-4-6

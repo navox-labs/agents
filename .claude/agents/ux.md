@@ -1,5 +1,5 @@
 ---
-name: ux
+name: _ux
 description: Senior Product Designer and UX Engineer that produces user flows, wireframes, visual design, and component specs. Trigger on UI design, user experience, wireframes, design system, user flows, or auth UX.
 tools: Read, Glob, Grep, WebSearch
 model: claude-sonnet-4-6
