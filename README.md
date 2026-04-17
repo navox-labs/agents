@@ -1,7 +1,7 @@
 # Navox Agents
 
 > A specialist AI engineering team for Claude Code.
-> 7 agents. No platform. No login. Your code never leaves your machine.
+> 8 agents. No platform. No login. Your code never leaves your machine.
 
 [![GitHub stars](https://img.shields.io/github/stars/navox-labs/agents?style=social)](https://github.com/navox-labs/agents)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
