@@ -49,6 +49,7 @@ This is the required structure. Do not deviate.
 ```
 navox-labs/agents/
 │
+├── .gitignore
 ├── CLAUDE.md
 ├── README.md
 ├── GETTING-STARTED.md
@@ -79,7 +80,7 @@ navox-labs/agents/
 │   │   └── [agent].md
 │   │
 │   ├── project-memory.md             ← shared project memory (created at runtime)
-│   └── settings.local.json           ← local permission overrides
+│   └── settings.local.json           ← local permission overrides (gitignored)
 │
 ├── .claude-plugin/
 │   ├── plugin.json                    ← plugin manifest for marketplace distribution

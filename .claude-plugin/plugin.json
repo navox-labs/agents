@@ -1,7 +1,7 @@
 {
   "name": "navox-agents",
   "version": "1.3.0",
-  "description": "Specialist AI engineering team for Claude Code. 7 agents with HITL checkpoints and /agency-run orchestrator.",
+  "description": "Specialist AI engineering team for Claude Code. 8 agents with HITL checkpoints and /agency-run orchestrator.",
   "author": {
     "name": "Navox Labs",
     "email": "hello@navox.tech"

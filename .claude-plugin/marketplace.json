@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "navox-agents",
-      "description": "Specialist AI engineering team for Claude Code. 7 agents: Architect, UI/UX, Full Stack, QA, Security, DevOps, Local Review. Includes HITL checkpoints, model routing, and the /agency-run orchestrator.",
+      "description": "Specialist AI engineering team for Claude Code. 8 agents: Architect, UI/UX, Full Stack, DevOps, Local Review, QA, Security, Installer. Includes HITL checkpoints, model routing, and the /agency-run orchestrator.",
       "source": {
         "source": "github",
         "repo": "navox-labs/agents"

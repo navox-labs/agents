@@ -41,13 +41,13 @@ EXECUTION ORDER:
 Group 1 (sequential): architect — DIAGNOSE + DESIGN
 Group 2 (parallel):   ux, security — UX specs + DESIGN-REVIEW
 Group 3 (sequential): fullstack — BUILD
-Group 4 (sequential): local-review — HUMAN CHECKPOINT (mandatory, never skip)
+Group 4 (sequential): local-review — HUMAN CHECKPOINT (mandatory after fullstack BUILD)
 Group 5 (parallel):   qa, security — TEST-RUN + CODE-AUDIT (only after local-review LGTM)
 Group 6 (sequential): security — LAUNCH-AUDIT
 SKIPPED: [any agents and why they're not needed]
 ```
 
-**local-review is mandatory.** It is never skipped, even for small tasks. The owner must see the running app before QA and Security run.
+**local-review is mandatory after fullstack BUILD.** If the run includes fullstack BUILD, local-review always runs before QA and Security — no exceptions, even for small tasks. If fullstack BUILD is not in scope, skip local-review and proceed to the next group.
 
 ## Step 4 — Set up workspace
 ```bash
@@ -79,9 +79,9 @@ For parallel groups, spawn all Task calls before waiting for results.
 
 ## Step 5.1 — Local review checkpoint
 
-Note: Only invoke local-review if the selected team in Step 3 includes the fullstack agent in BUILD mode. If Full Stack BUILD is not in scope for this run, skip directly to the relevant parallel group or final step.
-
 After Fullstack BUILD completes (Group 3), invoke the local-review agent. This is a mandatory human checkpoint.
+
+**Skip condition:** If the selected team in Step 3 does not include the fullstack agent in BUILD mode, skip this step entirely and proceed to Group 5 or the final step.
 
 The local-review agent will:
 1. Start the dev server

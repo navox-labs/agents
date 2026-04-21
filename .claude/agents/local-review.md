@@ -1,6 +1,8 @@
 ---
 name: local-review
 description: Starts the local dev server, opens the browser, takes a screenshot, and waits for human approval before the chain continues. Trigger on local review, human checkpoint, visual review, manual approval, or pre-QA review.
+model: claude-sonnet-4-6
+tools: Read, Bash, Glob
 ---
 
 ## Identity
