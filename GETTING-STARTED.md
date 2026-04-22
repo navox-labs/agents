@@ -188,13 +188,15 @@ After the run, the team wrote down everything it learned:
 cat .claude/project-memory.md
 ```
 
-This file records:
-- What was built
-- What decisions were made and why
-- What still needs to be done
-- What the next run should know
+This file has three sections:
 
-**This is important.** Next time you run `/agency-run`, the team reads this file first. It won't repeat work. It won't ask you to re-explain the stack.
+- **Current State** — what's true right now: the stack, status, live URL. This gets overwritten each run so it's always accurate.
+- **Active Decisions** — open questions that still need answers. Resolved decisions get removed automatically.
+- **History** — what happened in each run, newest first. Never deleted — this is the audit trail.
+
+Each agent also keeps its own memory in `.claude/memory/[agent].md` with the same structure.
+
+**This is important.** Next time you run `/agency-run`, the team reads these files first. It won't repeat work. It won't ask you to re-explain the stack. And because current state is separate from history, the team always knows what's true right now vs what happened in the past.
 
 ---
 

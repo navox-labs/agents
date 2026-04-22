@@ -111,28 +111,54 @@ The owner wants to pause. Do the following:
 
 ## Step 6 — Update project memory
 
-After all agents complete, update .claude/project-memory.md:
-```bash
-cat >> .claude/project-memory.md << 'EOF'
+After all agents complete, update `.claude/project-memory.md` using the structured format below. Project memory has three sections with different update rules:
 
-## Run: [date] — [one-line task summary]
+### 6a — Overwrite "Current State"
 
-### Decisions made
-- [key decision and why]
+Replace the Current State section entirely with the latest truth. This section is authoritative — it reflects what exists right now, not what happened historically.
 
-### Files created or modified
-- [filepath]: [what it does]
-
-### Agents run
-- [agent-id]: [what they produced]
-
-### Local review verdict
-- [LGTM | FEEDBACK | STOP]: [details]
-
-### Context for next run
-- [anything the next engineer needs to know]
-EOF
 ```
+## Current State
+
+- **Stack:** [current tech stack]
+- **Status:** [building | testing | deployed | paused]
+- **Live URL:** [URL if deployed, "not deployed" otherwise]
+- **Last run:** [date] — [one-line summary]
+- **Last verdict:** [LGTM | FEEDBACK | STOP | N/A]
+```
+
+### 6b — Update "Active Decisions"
+
+Add any new open decisions. Remove any that were resolved during this run. This section should only contain unresolved items.
+
+```
+## Active Decisions
+
+- [ ] [Decision needed]: [context] — Owner: [who decides] — Added: [date]
+```
+
+If all decisions are resolved, write: `No open decisions.`
+
+### 6c — Prepend to "History"
+
+Add the run record at the top of the History section (newest first). Never delete history entries.
+
+```
+## History
+
+### [date] — [one-line task summary]
+- **Agents run:** [agent-id]: [what they produced]
+- **Decisions made:** [key decision and why]
+- **Files changed:** [filepath]: [what it does]
+- **Local review:** [verdict and details]
+- **Context for next run:** [anything the next engineer needs to know]
+```
+
+### 6d — Memory maintenance
+
+After updating, scan the file for:
+- **Stale decisions** in Active Decisions that are contradicted by the History — remove them
+- **History entries older than 10 runs** — summarize into a single "Earlier history" entry at the bottom to prevent unbounded growth
 
 ## Step 7 — Summary
 

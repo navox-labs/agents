@@ -196,14 +196,31 @@ cat .claude/memory/fullstack.md 2>/dev/null || echo "No memory yet"
 
 This is your institutional memory for this codebase. Read it before starting work.
 
-After completing your task, update your memory:
+After completing your task, update your memory using the structured format below:
+
 ```bash
 mkdir -p .claude/memory
-cat >> .claude/memory/fullstack.md << 'EOF'
+```
 
-## [date] — [task summary]
-- [key decision made]
+Your memory file has two sections with different update rules:
+
+**Current State** — Overwrite entirely each run. This is what's true right now.
+```
+## Current State
+- **Stack:** [framework, database, auth library in use]
+- **Key files:** [most important files and what they do]
+- **Auth status:** [implemented | partial | not started]
+- **Test coverage:** [unit tests passing/failing count]
+- **Last run:** [date] — [what you did]
+```
+
+**History** — Prepend new entries (newest first). Never delete.
+```
+## History
+### [date] — [task summary]
+- [key decision made and why]
 - [pattern observed]
 - [what to remember for next time]
-EOF
 ```
+
+If the file exceeds 50 lines, summarize old history entries into a single "Earlier work" block at the bottom.

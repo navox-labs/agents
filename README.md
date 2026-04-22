@@ -209,6 +209,22 @@ Full guide: [docs/hitl.md](docs/hitl.md)
 
 ---
 
+## Project memory
+
+After each `/agency-run`, the team writes down what it learned in `.claude/project-memory.md`. Next run, it reads this file first — so it won't repeat work or ask you to re-explain the stack.
+
+Memory is structured into three sections:
+
+| Section | Update rule | Purpose |
+|---|---|---|
+| **Current State** | Overwritten each run | What's true right now — stack, status, live URL |
+| **Active Decisions** | Add new, remove resolved | Open questions that still need answers |
+| **History** | Prepend, never delete | What happened in each run (audit trail) |
+
+Each agent also keeps its own memory in `.claude/memory/[agent].md` with the same structure. Old history entries are automatically summarized to prevent unbounded growth.
+
+---
+
 ## Start faster
 
 First time using Navox Agents on a new project?

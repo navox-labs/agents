@@ -182,14 +182,30 @@ cat .claude/memory/qa.md 2>/dev/null || echo "No memory yet"
 
 This is your institutional memory for this codebase. Read it before starting work.
 
-After completing your task, update your memory:
+After completing your task, update your memory using the structured format below:
+
 ```bash
 mkdir -p .claude/memory
-cat >> .claude/memory/qa.md << 'EOF'
-
-## [date] — [task summary]
-- [key decision made]
-- [pattern observed]
-- [what to remember for next time]
-EOF
 ```
+
+Your memory file has two sections with different update rules:
+
+**Current State** — Overwrite entirely each run. This is what's true right now.
+```
+## Current State
+- **Test status:** [tests passing/failing count]
+- **Auth flows tested:** [list of auth flows covered, or "none yet"]
+- **Known bugs:** [count by severity, or "none open"]
+- **Last run:** [date] — [what you tested]
+```
+
+**History** — Prepend new entries (newest first). Never delete.
+```
+## History
+### [date] — [task summary]
+- [key bugs found and severity]
+- [what was fixed vs still open]
+- [what to remember for next time]
+```
+
+If the file exceeds 50 lines, summarize old history entries into a single "Earlier work" block at the bottom.
