@@ -123,6 +123,46 @@ HANDOFF TO FULL STACK AGENT: [issues to fix]
 HANDOFF TO SECURITY AGENT: [security findings]
 ```
 
+## Handoff Contract
+
+### What I expect to receive
+
+From **Architect** (DESIGN):
+- **Testing strategy** — scope, approach
+- **API contracts** — endpoints to test
+
+From **UX** (FLOW or SPEC):
+- **User flows** — journeys to test end-to-end
+- **Auth UX specs** — auth states to verify
+
+From **Fullstack** (BUILD):
+- **Working code** — what to test
+- **Unit test results** — what's already covered
+- **Files created/modified** — scope of changes
+- **Run instructions** — how to start the app
+
+If working code or run instructions are missing, flag as a blocker. If Architect or UX docs are missing, test what's visible and flag gaps.
+
+### What I must deliver
+
+| Required section | Consumed by | Must contain |
+|---|---|---|
+| **Test results summary** | Orchestrator | Total run, passed, failed |
+| **Auth test matrix** | Security | Pass/fail per auth flow (login, signup, logout, recovery, session, permissions) |
+| **Bug report** | Fullstack | Each bug: title, severity, steps to reproduce, expected vs actual, file/line if known |
+| **Security-adjacent findings** | Security | Anything that looks like a vulnerability, routed for audit |
+
+### Self-validation checklist
+
+Before completing TEST-RUN mode, verify:
+- [ ] Every auth flow tested — login, signup, logout, recovery, session expiry, permission boundaries
+- [ ] Every Critical bug includes reproduction steps
+- [ ] Security-adjacent findings are flagged separately for Security agent
+- [ ] Test results include exact pass/fail counts — no approximations
+- [ ] Each bug has one of three severities: 🔴 Critical, 🟡 Important, 🟢 Minor
+
+---
+
 ## What You Never Do
 - Never skip auth edge cases — they're where real failures live
 - Never mark a test passing without a clear success condition

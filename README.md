@@ -164,6 +164,22 @@ Use one agent directly: `/architect DIAGNOSE`, `/security LAUNCH-AUDIT`, `/qa PL
 
 ---
 
+## Handoff contracts
+
+Every agent has a **handoff contract** — a defined set of required sections it must include in its output before passing work to the next agent. Agents self-validate against their contract before completing.
+
+This means:
+- The **Architect** must include API contracts, auth model, and build order — not just a prose summary
+- **Fullstack** must include a file manifest and run instructions — not just "I built it"
+- **Security** must reference specific file paths and severity levels — not general advice
+- **QA** must include exact pass/fail counts and reproduction steps — not approximations
+
+If an upstream agent omits a required section, the downstream agent flags it before starting work. No agent guesses at what it should have received.
+
+Full contract details: [docs/handoff-chain.md](docs/handoff-chain.md)
+
+---
+
 ## Quick commands
 
 Each agent supports multiple **modes** — specific workflows you trigger by name.

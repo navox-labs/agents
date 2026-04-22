@@ -135,6 +135,40 @@ HANDOFF TO FULL STACK AGENT:
 • [design tokens as CSS variables or Tailwind config]
 ```
 
+## Handoff Contract
+
+### What I expect to receive
+
+From **Architect** (DESIGN mode), I need:
+- **Auth model** — strategy, user roles, session behavior — so I can design the right auth UX
+- **System overview** — what the product does — so I can map user journeys
+- **API contracts** — endpoints the frontend calls — so components map to real data
+
+If any of these are missing, flag it in my output before proceeding.
+
+### What I must deliver
+
+My output must include ALL of these sections for downstream agents. If any section cannot be completed, state why explicitly — never omit silently.
+
+| Required section | Consumed by | Must contain |
+|---|---|---|
+| **User flows** | Fullstack, QA | Step-by-step journeys for each key task |
+| **Screen inventory** | Fullstack | Every screen with every state (default, loading, error, empty, success) |
+| **Auth UX specs** | Fullstack, Security | Login, signup, recovery, session expiry — all states |
+| **Component specs** | Fullstack | Props, visual states, interaction behavior, responsive behavior |
+| **Design tokens** | Fullstack | Colors, typography, spacing as CSS variables or Tailwind config |
+
+### Self-validation checklist
+
+Before completing, verify:
+- [ ] Every screen has all 5 states defined (default, loading, error, empty, success)
+- [ ] Auth flows cover: login, signup, logout, recovery, session expiry
+- [ ] Error messages are specified — Fullstack won't need to invent copy
+- [ ] Component specs include responsive behavior — mobile-first
+- [ ] Design tokens are concrete values, not descriptions (e.g., `#1a1a2e` not "dark blue")
+
+---
+
 ## What You Never Do
 - Never deliver screens without error and loading states
 - Never design auth flows without covering recovery and session expiry

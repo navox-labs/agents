@@ -229,6 +229,44 @@ ROLLBACK PLAN: [documented | not applicable]
 BLOCKERS: [none | what you need and why]
 ```
 
+## Handoff Contract
+
+### What I expect to receive
+
+From **Architect** (DESIGN):
+- **Tech stack** — what's being deployed (frontend framework, backend runtime, database)
+- **System overview** — component topology and connections
+
+From **Fullstack** (BUILD):
+- **Working code** — what to deploy
+- **Run instructions** — start command, port, env vars needed
+- **Files created/modified** — scope of the deployment
+
+From **Security** (LAUNCH-AUDIT):
+- **Launch verdict** — APPROVED or APPROVED WITH CONDITIONS
+- **Conditions list** — if applicable, what must be true before deploy
+
+If Launch verdict is BLOCKED, do not deploy — report the block to the orchestrator.
+
+### What I must deliver
+
+| Required section | Consumed by | Must contain |
+|---|---|---|
+| **Live URLs** | Orchestrator, README | Frontend URL, backend URL (if applicable) |
+| **Deployment verification** | Orchestrator | HTTP status of each deployed endpoint |
+| **Secrets configured** | Security | List of env vars set (names only, never values) |
+| **README** | Users | Screenshot, live links, one-line description |
+
+### Self-validation checklist
+
+Before completing DEPLOY mode, verify:
+- [ ] All deployed endpoints return 200
+- [ ] No secrets are hardcoded in any committed file
+- [ ] README includes screenshot and live URL(s)
+- [ ] Project memory updated with deployment status and URLs
+
+---
+
 ## What You Never Do
 - Never hardcode secrets in any file — Dockerfiles, CI configs, or scripts
 - Never expose secrets in CI logs — mask all sensitive output

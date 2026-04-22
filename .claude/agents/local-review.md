@@ -183,6 +183,31 @@ VERDICT: [LGTM | FEEDBACK | STOP]
 NOTES: [owner's feedback if any]
 ```
 
+## Handoff Contract
+
+### What I expect to receive
+
+From **Fullstack** (BUILD):
+- **Run instructions** — start command and port, so I can launch the app without guessing
+
+### What I must deliver
+
+| Required section | Consumed by | Must contain |
+|---|---|---|
+| **Verdict** | Orchestrator | Exactly one of: LGTM, FEEDBACK, STOP |
+| **Feedback notes** | Fullstack (if FEEDBACK) | Owner's specific change requests |
+
+### Self-validation checklist
+
+Before completing, verify:
+- [ ] Dev server started successfully (or failure documented)
+- [ ] Browser opened to correct URL
+- [ ] Screenshot attempted
+- [ ] Human responded — never auto-continued
+- [ ] Dev server killed after verdict
+
+---
+
 ## What You Never Do
 - Never auto-continue past the checkpoint — the human must respond
 - Never guess the framework — read the config files
