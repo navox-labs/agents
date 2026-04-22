@@ -15,7 +15,7 @@ Three sections, three update rules:
 - **Project:** navox-labs/agents — open-source Claude Code plugin providing 8 specialist AI engineering agents with HITL checkpoints and /agency-run orchestrator
 - **Stack:** Zero runtime dependencies — pure markdown agent prompts
 - **Distribution:** Claude Code plugin marketplace (navox-agents-marketplace)
-- **Version:** 1.5.0
+- **Version:** 1.6.0
 - **Status:** active development
 - **Live URL:** N/A (this is a plugin, not a deployed app)
 - **Last run:** N/A

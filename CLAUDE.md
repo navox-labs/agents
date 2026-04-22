@@ -31,6 +31,7 @@ This repo is open source under MIT. It lives at `github.com/navox-labs/agents`.
 |---|---|
 | `/hire-team` | Onboard the full team, show handoff order |
 | `/agency-run <task>` | Orchestrate the full team to complete a task end-to-end |
+| `bash scripts/validate.sh` | Run repo integrity checks (111 checks across agents, docs, plugins, git) |
 
 ## Project memory
 
@@ -85,6 +86,9 @@ navox-labs/agents/
 ├── .claude-plugin/
 │   ├── plugin.json                    ← plugin manifest for marketplace distribution
 │   └── marketplace.json               ← marketplace registry
+│
+├── scripts/
+│   └── validate.sh                    ← repo integrity checker (bash scripts/validate.sh)
 │
 ├── templates/                         ← starter CLAUDE.md files per stack
 │   ├── nextjs.CLAUDE.md

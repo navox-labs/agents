@@ -244,6 +244,18 @@ Pick one. The agents read it automatically when Claude Code opens.
 
 ---
 
+## Repo validation
+
+If you fork or customize agent prompts, run the integrity checker to catch drift:
+
+```bash
+bash scripts/validate.sh
+```
+
+Checks 111 things: agent files, frontmatter, model routing, handoff contracts, memory templates, plugin manifests, doc completeness, agent count consistency, and git hygiene. Exits 0 on pass, 1 on failure.
+
+---
+
 ## What this is not
 
 - Not a platform. No dashboard, no login.
