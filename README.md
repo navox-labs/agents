@@ -1,7 +1,7 @@
 # Navox Agents
 
-> A specialist AI engineering team for Claude Code.
-> 8 agents. No platform. No login. Your code never leaves your machine.
+> A 15-agent AI engineering team that covers the full sprint cycle.
+> Think. Plan. Build. Review. Test. Ship. Reflect. Zero dependencies.
 
 [![GitHub stars](https://img.shields.io/github/stars/navox-labs/agents?style=social)](https://github.com/navox-labs/agents)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -150,17 +150,24 @@ flowchart TD
 
 | | Agent | What they do |
 |---|---|---|
+| 🧠 | **Strategist** | Challenges assumptions. Asks forcing questions. No sycophancy. |
+| 📋 | **Spec Writer** | Turns vague ideas into precise, testable specifications. |
 | 🏗️ | **Architect** | Designs the system. Picks the stack. Defines auth. |
 | 🎨 | **UI/UX** | Maps user flows. Specs every screen and state. |
 | ⚙️ | **Full Stack** | Builds it. Tests it. Ships clean code. |
+| 🔍 | **Investigator** | Root-cause debugging. No fixes without diagnosis. |
+| 📝 | **Reviewer** | 7-specialist parallel review army. |
 | 🚀 | **DevOps** | CI/CD. Docker. Deploys. Secrets never touch code. |
 | 👁️ | **Local Review** | Starts the app. Shows it to you. Waits for your go. |
 | 🧪 | **QA** | Finds every bug. Auth flows get extra scrutiny. |
-| 🔐 | **Security** | Audits everything. Nothing launches without a verdict. |
-| 📦 | **Installer** | Helps you discover and install individual agents. |
+| 🔐 | **Security** | OWASP + STRIDE audits. Nothing launches without a verdict. |
+| 📦 | **Shipper** | Tests, changelog, version bump, PR. The last mile. |
+| 🔄 | **Retro** | Sprint retrospectives. Learnings compound over time. |
+| 💾 | **Context Manager** | Session persistence. Pause any sprint, resume later. |
+| 🛠️ | **Installer** | Helps you discover and install individual agents. |
 
-Use one agent directly: `/architect DIAGNOSE`, `/security LAUNCH-AUDIT`, `/qa PLAN`
-(Plugin users: prefix with `navox-agents:` e.g. `/navox-agents:architect DIAGNOSE`)
+Use one agent directly: `/strategist DIAGNOSE`, `/architect DESIGN`, `/investigator INVESTIGATE`
+(Plugin users: prefix with `navox-agents:` e.g. `/navox-agents:strategist DIAGNOSE`)
 
 ---
 
@@ -180,20 +187,33 @@ Full contract details: [docs/handoff-chain.md](docs/handoff-chain.md)
 
 ---
 
-## Quick commands
+## Sprint modes
 
-Each agent supports multiple **modes** — specific workflows you trigger by name.
+Three ways to run the team, depending on what you need:
+
+| Mode | Command | What it runs |
+|---|---|---|
+| **Full Sprint** | `/agency-run FULL <task>` | Think → Plan → Build → Review → Test → Ship → Reflect |
+| **Quick Sprint** | `/agency-run QUICK <task>` | Plan → Build → Test → Ship |
+| **Hotfix** | `/agency-run HOTFIX <task>` | Investigate → Build → Ship |
+
+## Quick commands
 
 | What you need | Command |
 |---|---|
-| Don't know where to start | `/architect DIAGNOSE` |
-| Full system design | `/architect DESIGN` |
+| Validate an idea | `/strategist DIAGNOSE` |
+| Write a spec | `/spec-writer WRITE` |
+| System design | `/architect DESIGN` |
+| Debug a bug | `/investigator INVESTIGATE` |
 | Build a feature | `/fullstack BUILD` |
-| Check if it's secure | `/security LAUNCH-AUDIT` |
-| Run the whole team | `/agency-run your task here` |
+| Review code | `/reviewer REVIEW` |
+| Ship a release | `/shipper SHIP` |
+| Run a retro | `/retro RETRO` |
+| Save context | `/context-manager SAVE` |
+| Run the whole team | `/agency-run FULL your task here` |
 | See all modes | [docs/modes.md](docs/modes.md) |
 
-Plugin users: prefix commands with `navox-agents:` (e.g. `/navox-agents:architect DIAGNOSE`)
+Plugin users: prefix commands with `navox-agents:` (e.g. `/navox-agents:strategist DIAGNOSE`)
 
 ---
 
@@ -244,15 +264,21 @@ Pick one. The agents read it automatically when Claude Code opens.
 
 ---
 
-## Repo validation
+## Quality assurance
 
-If you fork or customize agent prompts, run the integrity checker to catch drift:
+Two validation tools keep the agents sharp:
 
+**Repo integrity** — structural checks across all files:
 ```bash
 bash scripts/validate.sh
 ```
 
-Checks 111 things: agent files, frontmatter, model routing, handoff contracts, memory templates, plugin manifests, doc completeness, agent count consistency, and git hygiene. Exits 0 on pass, 1 on failure.
+**Agent quality eval** — scores each agent 0-10 against a rubric (frontmatter, modes, handoff contracts, anti-hallucination, memory integration, and more):
+```bash
+bash scripts/eval.sh
+```
+
+Minimum passing score: 8/10. All 14 scored agents currently pass.
 
 ---
 
