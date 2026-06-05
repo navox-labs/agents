@@ -19,7 +19,7 @@
 
 **PipeWar — built, debugged, and deployed by agents:**
 > 🛡️ A Factorio-inspired tower defense game. Built from scratch, 8 production bugs diagnosed and fixed, 65 tests passing. All by the agent team.
-> [Play PipeWar →](https://frontend-beta-five-83.vercel.app) · [See the code →](https://github.com/navox-labs/pipewar)
+> [See the code →](https://github.com/navox-labs/pipewar)
 
 ---
 
