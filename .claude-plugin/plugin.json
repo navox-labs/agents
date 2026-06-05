@@ -1,7 +1,7 @@
 {
   "name": "navox-agents",
-  "version": "1.6.0",
-  "description": "Specialist AI engineering team for Claude Code. 8 agents with HITL checkpoints, handoff contracts, structured memory, and /agency-run orchestrator.",
+  "version": "2.0.0",
+  "description": "15-agent AI engineering team for Claude Code. Full sprint cycle: Think, Plan, Build, Review, Test, Ship, Reflect. HITL checkpoints, handoff contracts, eval system, and 3 sprint modes.",
   "author": {
     "name": "Navox Labs",
     "email": "hello@navox.tech"
@@ -9,25 +9,39 @@
   "homepage": "https://navox.tech",
   "repository": "https://github.com/navox-labs/agents",
   "license": "MIT",
-  "keywords": ["agents", "engineering", "devtools", "claude-code"],
+  "keywords": ["agents", "engineering", "devtools", "claude-code", "sprint", "review", "shipping"],
   "agents": [
     "./.claude/agents/architect.md",
+    "./.claude/agents/context-manager.md",
     "./.claude/agents/devops.md",
     "./.claude/agents/fullstack.md",
     "./.claude/agents/installer.md",
+    "./.claude/agents/investigator.md",
     "./.claude/agents/local-review.md",
     "./.claude/agents/qa.md",
+    "./.claude/agents/retro.md",
+    "./.claude/agents/reviewer.md",
     "./.claude/agents/security.md",
+    "./.claude/agents/shipper.md",
+    "./.claude/agents/spec-writer.md",
+    "./.claude/agents/strategist.md",
     "./.claude/agents/ux.md"
   ],
   "commands": [
     "./.claude/commands/hire-team.md",
     "./.claude/commands/agency-run.md",
     "./.claude/commands/architect.md",
+    "./.claude/commands/context-manager.md",
+    "./.claude/commands/devops.md",
     "./.claude/commands/fullstack.md",
-    "./.claude/commands/ux.md",
+    "./.claude/commands/investigator.md",
     "./.claude/commands/qa.md",
+    "./.claude/commands/retro.md",
+    "./.claude/commands/reviewer.md",
     "./.claude/commands/security.md",
-    "./.claude/commands/devops.md"
+    "./.claude/commands/shipper.md",
+    "./.claude/commands/spec-writer.md",
+    "./.claude/commands/strategist.md",
+    "./.claude/commands/ux.md"
   ]
 }
