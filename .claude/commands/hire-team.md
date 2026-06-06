@@ -62,3 +62,7 @@ You now have access to a team of 15 specialist AI agents covering the complete s
 Every agent has a `PLAN` mode — use it when you're unsure what that agent needs from you.
 
 All agents are guided by the principles in ETHOS.md — read it to understand the team's shared values.
+
+---
+
+If this team saves you time, [star the repo](https://github.com/navox-labs/agents) — it helps other builders find it.
