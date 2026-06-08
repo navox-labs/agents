@@ -61,6 +61,9 @@ class StepResult:
     token_usage: dict = field(default_factory=dict)
     error: str = ""
     cached: bool = False
+    eval_score: float | None = None
+    eval_details: dict = field(default_factory=dict)
+    retry_count: int = 0
 
     @property
     def ok(self) -> bool:
@@ -138,6 +141,7 @@ class Orchestrator:
 
     MAX_CONTINUATION_TURNS = 3  # Max retries for max_tokens truncation
     MAX_RETRIES = 2  # Max retries for transient API errors
+    EVAL_THRESHOLD = 8.0  # Minimum deterministic eval score to accept output
 
     def __init__(
         self,
@@ -377,7 +381,7 @@ class Orchestrator:
         project_memory: str,
         context_hash: str,
     ) -> StepResult:
-        """Run a single agent with journaling and stop reason handling."""
+        """Run a single agent with journaling, eval gating, and stop reason handling."""
         # Check journal for cached result
         key = Journal.make_key(agent_id, mode, task, context_hash)
         cached = self.journal.get(key)
@@ -411,6 +415,80 @@ class Orchestrator:
             )
 
         logger.info(f"  RUN     {agent_id} ({mode}) — {config.model}")
+
+        # Eval-gated retry loop: run agent, evaluate output, retry if below threshold
+        best_step = None
+        for attempt in range(self.MAX_RETRIES + 1):
+            step = self._execute_and_parse(
+                agent_id, mode, task, context, project_memory,
+                config, key, attempt,
+            )
+
+            if not step.ok:
+                # Don't retry non-COMPLETE outputs (BLOCKED, ERROR, PARSE_ERROR)
+                best_step = step
+                break
+
+            # Evaluate output quality
+            eval_score, eval_details = self._evaluate_output(
+                agent_id, mode, task, step.raw_output,
+            )
+            step.eval_score = eval_score
+            step.eval_details = eval_details
+            step.retry_count = attempt
+
+            if eval_score >= self.EVAL_THRESHOLD:
+                best_step = step
+                break
+
+            # Below threshold — retry with feedback
+            logger.warning(
+                f"  EVAL    {agent_id}: score {eval_score:.1f} < {self.EVAL_THRESHOLD} "
+                f"(attempt {attempt + 1}/{self.MAX_RETRIES + 1})"
+            )
+
+            if attempt < self.MAX_RETRIES:
+                # Add eval feedback to context for the retry
+                failed_checks = [
+                    f"- {k}: {v}" for k, v in eval_details.items()
+                    if isinstance(v, bool) and not v
+                ]
+                context += (
+                    f"\n\n[EVAL FEEDBACK — your previous output scored {eval_score:.1f}/10. "
+                    f"Issues:\n" + "\n".join(failed_checks[:5]) + "]"
+                )
+            else:
+                # Accept the best attempt even if below threshold
+                best_step = step
+
+        # Journal the final result
+        self.journal.save(key, JournalEntry(
+            key=key, agent_id=agent_id, mode=mode,
+            status=best_step.status, raw_output=best_step.raw_output,
+            timestamp=time.time(), duration_ms=best_step.duration_ms,
+            model=config.model, token_usage=best_step.token_usage,
+            error=best_step.error,
+        ))
+
+        status_icon = "DONE" if best_step.ok else best_step.status
+        eval_info = f" eval={best_step.eval_score:.1f}" if best_step.eval_score is not None else ""
+        retry_info = f" retries={best_step.retry_count}" if best_step.retry_count > 0 else ""
+        logger.info(f"  {status_icon:8s} {agent_id} — {best_step.duration_ms}ms{eval_info}{retry_info}")
+
+        return best_step
+
+    def _execute_and_parse(
+        self,
+        agent_id: str,
+        mode: str,
+        task: str,
+        context: str,
+        project_memory: str,
+        config: AgentConfig,
+        journal_key: str,
+        attempt: int,
+    ) -> StepResult:
+        """Execute a single API call and parse the output."""
         start_time = time.monotonic()
 
         # Build messages
@@ -427,7 +505,7 @@ class Orchestrator:
         except Exception as e:
             duration_ms = int((time.monotonic() - start_time) * 1000)
             logger.error(f"  ERROR   {agent_id}: {e}")
-            step = StepResult(
+            return StepResult(
                 agent_id=agent_id,
                 mode=mode,
                 status="ERROR",
@@ -435,14 +513,6 @@ class Orchestrator:
                 model=config.model,
                 duration_ms=duration_ms,
             )
-            # Journal failures too (so we don't retry immediately)
-            self.journal.save(key, JournalEntry(
-                key=key, agent_id=agent_id, mode=mode,
-                status="ERROR", raw_output="", error=str(e),
-                timestamp=time.time(), duration_ms=duration_ms,
-                model=config.model,
-            ))
-            return step
 
         duration_ms = int((time.monotonic() - start_time) * 1000)
 
@@ -474,7 +544,7 @@ class Orchestrator:
                     f"{', '.join(validation.failed[:3])}"
                 )
 
-        step = StepResult(
+        return StepResult(
             agent_id=agent_id,
             mode=mode,
             status=status,
@@ -486,19 +556,75 @@ class Orchestrator:
             error=error,
         )
 
-        # Journal the result
-        self.journal.save(key, JournalEntry(
-            key=key, agent_id=agent_id, mode=mode,
-            status=status, raw_output=raw_output,
-            timestamp=time.time(), duration_ms=duration_ms,
-            model=config.model, token_usage=token_usage,
-            error=error,
-        ))
+    def _evaluate_output(
+        self,
+        agent_id: str,
+        mode: str,
+        task: str,
+        raw_output: str,
+    ) -> tuple[float, dict]:
+        """Evaluate agent output using deterministic checks.
 
-        status_icon = "DONE" if step.ok else step.status
-        logger.info(f"  {status_icon:8s} {agent_id} — {duration_ms}ms")
+        Returns (score, details_dict). Score is 0-10.
+        Uses the same validation as eval/runner.py but without API calls.
+        """
+        from navox.models.output_schema import AgentOutput
 
-        return step
+        details = {}
+        checks_passed = 0
+        checks_total = 0
+
+        # 1. XML parses
+        checks_total += 1
+        try:
+            parsed = AgentOutput.from_xml(raw_output)
+            details["xml_parses"] = True
+            checks_passed += 1
+        except ValueError:
+            details["xml_parses"] = False
+            return 0.0, details
+
+        # 2. Required fields present
+        for field_name in ("agent", "mode", "status", "deliverable", "verdict"):
+            checks_total += 1
+            value = getattr(parsed, field_name, "")
+            present = bool(value and value.strip())
+            details[f"field_{field_name}"] = present
+            if present:
+                checks_passed += 1
+
+        # 3. Deliverable has substance (>50 chars)
+        checks_total += 1
+        has_substance = len(parsed.deliverable) > 50
+        details["deliverable_substance"] = has_substance
+        if has_substance:
+            checks_passed += 1
+
+        # 4. Handoff present for COMPLETE
+        if parsed.is_complete:
+            checks_total += 1
+            has_handoff = bool(parsed.next_agent)
+            details["handoff_present"] = has_handoff
+            if has_handoff:
+                checks_passed += 1
+
+        # 5. Self-validation present and passing
+        checks_total += 1
+        has_validation = len(parsed.self_validation) > 0
+        details["self_validation_present"] = has_validation
+        if has_validation:
+            checks_passed += 1
+
+        if has_validation and parsed.is_complete:
+            checks_total += 1
+            all_pass = parsed.all_validations_pass
+            details["self_validation_passing"] = all_pass
+            if all_pass:
+                checks_passed += 1
+
+        # Score: scale to 0-10
+        score = (checks_passed / checks_total * 10) if checks_total > 0 else 0.0
+        return round(score, 1), details
 
     def _call_with_continuation(
         self,
@@ -620,7 +746,10 @@ def format_chain_result(result: ChainResult) -> str:
             if t:
                 tokens = f" [{t:,} tokens]"
 
-        lines.append(f"  {icon:10s} {step.agent_id} ({step.mode}) — {duration}{tokens}")
+        eval_info = f" eval={step.eval_score:.1f}" if step.eval_score is not None else ""
+        retry_info = f" (retried {step.retry_count}x)" if step.retry_count > 0 else ""
+
+        lines.append(f"  {icon:10s} {step.agent_id} ({step.mode}) — {duration}{tokens}{eval_info}{retry_info}")
         if step.error:
             lines.append(f"             {step.error[:80]}")
 

@@ -13,6 +13,7 @@ from navox.orchestrator import (
     ChainResult,
     format_chain_result,
 )
+from navox.models.output_schema import AgentOutput
 
 SDK_ROOT = Path(__file__).parent.parent
 REPO_ROOT = SDK_ROOT.parent
@@ -261,3 +262,124 @@ class TestChainResult:
         assert "SPRINT REPORT" in report
         assert "strategist" in report
         assert "COMPLETE" in report
+
+    def test_format_chain_result_with_eval_scores(self):
+        result = ChainResult(
+            sprint_mode="full", task="Build an app",
+            steps=[
+                StepResult(
+                    agent_id="strategist", mode="DIAGNOSE",
+                    status="COMPLETE", duration_ms=1500,
+                    eval_score=8.5, retry_count=0,
+                ),
+                StepResult(
+                    agent_id="architect", mode="DESIGN",
+                    status="COMPLETE", duration_ms=2000,
+                    eval_score=6.0, retry_count=1,
+                ),
+            ],
+        )
+        report = format_chain_result(result)
+        assert "eval=8.5" in report
+        assert "eval=6.0" in report
+        assert "retried 1x" in report
+
+
+# ── Eval integration tests ───────────────────────────────────
+
+
+GOOD_OUTPUT_XML = """<output>
+<agent>strategist</agent>
+<mode>DIAGNOSE</mode>
+<status>COMPLETE</status>
+<timestamp>2024-01-01T00:00:00Z</timestamp>
+<input-received>Build an invoicing app</input-received>
+<deliverable>This is a detailed diagnosis of the problem that spans more than fifty characters to pass the substance check.</deliverable>
+<verdict>The task is well-scoped and ready for architecture.</verdict>
+<handoff>
+  <next-agent>architect</next-agent>
+  <next-mode>DESIGN</next-mode>
+  <context-for-next>Diagnosis complete. Key findings: needs invoicing, payments, PDF export.</context-for-next>
+</handoff>
+<self-validation>
+- [x] Diagnosis covers the core problem
+- [x] Verdict is actionable
+</self-validation>
+<blockers>None</blockers>
+</output>"""
+
+WEAK_OUTPUT_XML = """<output>
+<agent>strategist</agent>
+<mode>DIAGNOSE</mode>
+<status>COMPLETE</status>
+<timestamp>2024-01-01T00:00:00Z</timestamp>
+<input-received>Build an invoicing app</input-received>
+<deliverable>Short.</deliverable>
+<verdict></verdict>
+<handoff>
+  <next-agent></next-agent>
+  <next-mode></next-mode>
+  <context-for-next></context-for-next>
+</handoff>
+<self-validation>
+- [ ] Not checked
+</self-validation>
+<blockers>None</blockers>
+</output>"""
+
+
+class TestEvalIntegration:
+    def test_evaluate_good_output(self):
+        orch = Orchestrator(
+            agents_dir=AGENTS_DIR,
+            registry_path=REGISTRY_PATH,
+        )
+        score, details = orch._evaluate_output(
+            "strategist", "DIAGNOSE", "Build an app", GOOD_OUTPUT_XML,
+        )
+        assert score >= 8.0, f"Good output should score 8+, got {score}: {details}"
+        assert details["xml_parses"] is True
+        assert details["deliverable_substance"] is True
+        assert details["handoff_present"] is True
+        assert details["self_validation_present"] is True
+        assert details["self_validation_passing"] is True
+
+    def test_evaluate_weak_output(self):
+        orch = Orchestrator(
+            agents_dir=AGENTS_DIR,
+            registry_path=REGISTRY_PATH,
+        )
+        score, details = orch._evaluate_output(
+            "strategist", "DIAGNOSE", "Build an app", WEAK_OUTPUT_XML,
+        )
+        assert score < 7.0, f"Weak output should score <7, got {score}: {details}"
+        assert details["deliverable_substance"] is False
+        assert details["field_verdict"] is False
+
+    def test_evaluate_unparseable_output(self):
+        orch = Orchestrator(
+            agents_dir=AGENTS_DIR,
+            registry_path=REGISTRY_PATH,
+        )
+        score, details = orch._evaluate_output(
+            "strategist", "DIAGNOSE", "Build an app", "not xml at all",
+        )
+        assert score == 0.0
+        assert details["xml_parses"] is False
+
+    def test_step_result_has_eval_fields(self):
+        step = StepResult(
+            agent_id="test", mode="M", status="COMPLETE",
+            eval_score=7.5, eval_details={"xml_parses": True},
+            retry_count=1,
+        )
+        assert step.eval_score == 7.5
+        assert step.retry_count == 1
+        assert step.eval_details["xml_parses"] is True
+
+    def test_eval_threshold_constant(self):
+        orch = Orchestrator(
+            agents_dir=AGENTS_DIR,
+            registry_path=REGISTRY_PATH,
+        )
+        assert orch.EVAL_THRESHOLD == 8.0
