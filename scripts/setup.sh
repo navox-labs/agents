@@ -1,19 +1,15 @@
 #!/usr/bin/env bash
-# Multi-platform setup script for navox-labs/agents
-# Zero dependencies — bash + git only
+# Setup script for navox-labs/agents
+# Installs agents and commands into Claude Code
 #
 # Usage:
-#   bash scripts/setup.sh                          # Install all agents for Claude Code (local)
-#   bash scripts/setup.sh --platform cursor         # Install for Cursor
+#   bash scripts/setup.sh                          # Install all agents (local project)
+#   bash scripts/setup.sh --global                 # Install to home directory (all projects)
 #   bash scripts/setup.sh --agents strategist,reviewer  # Install specific agents
-#   bash scripts/setup.sh --global                  # Install to home directory
-#
-# Supported platforms: claude, cursor, copilot, codex
+#   bash scripts/setup.sh --list                   # List available agents
 
 set -euo pipefail
 
-# Defaults
-PLATFORM="claude"
 AGENTS="all"
 SCOPE="local"
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
@@ -21,7 +17,6 @@ REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 # Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
@@ -29,12 +24,11 @@ usage() {
     echo "Usage: bash scripts/setup.sh [options]"
     echo ""
     echo "Options:"
-    echo "  --platform <claude|cursor|copilot|codex>  Target platform (default: claude)"
-    echo "  --agents <all|agent1,agent2,...>           Agents to install (default: all)"
-    echo "  --global                                   Install to home directory"
-    echo "  --local                                    Install to current project (default)"
-    echo "  --list                                     List available agents"
-    echo "  --help                                     Show this help"
+    echo "  --agents <all|agent1,agent2,...>  Agents to install (default: all)"
+    echo "  --global                          Install to home directory (all projects)"
+    echo "  --local                           Install to current project (default)"
+    echo "  --list                            List available agents"
+    echo "  --help                            Show this help"
 }
 
 list_agents() {
@@ -52,7 +46,6 @@ list_agents() {
 # Parse arguments
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --platform) PLATFORM="$2"; shift 2 ;;
         --agents) AGENTS="$2"; shift 2 ;;
         --global) SCOPE="global"; shift ;;
         --local) SCOPE="local"; shift ;;
@@ -62,56 +55,18 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# Validate platform
-case $PLATFORM in
-    claude|cursor|copilot|codex) ;;
-    *) echo -e "${RED}Unsupported platform: $PLATFORM${NC}"; echo "Supported: claude, cursor, copilot, codex"; exit 1 ;;
-esac
-
 # Determine target directories
-case $PLATFORM in
-    claude)
-        if [ "$SCOPE" = "global" ]; then
-            AGENTS_TARGET="$HOME/.claude/agents"
-            COMMANDS_TARGET="$HOME/.claude/commands"
-        else
-            AGENTS_TARGET=".claude/agents"
-            COMMANDS_TARGET=".claude/commands"
-        fi
-        ;;
-    cursor)
-        if [ "$SCOPE" = "global" ]; then
-            AGENTS_TARGET="$HOME/.cursor/agents"
-            COMMANDS_TARGET="$HOME/.cursor/commands"
-        else
-            AGENTS_TARGET=".cursor/agents"
-            COMMANDS_TARGET=".cursor/commands"
-        fi
-        ;;
-    copilot)
-        if [ "$SCOPE" = "global" ]; then
-            AGENTS_TARGET="$HOME/.copilot/skills/navox-agents"
-            COMMANDS_TARGET="$HOME/.copilot/skills/navox-agents/commands"
-        else
-            AGENTS_TARGET=".copilot/skills/navox-agents"
-            COMMANDS_TARGET=".copilot/skills/navox-agents/commands"
-        fi
-        ;;
-    codex)
-        if [ "$SCOPE" = "global" ]; then
-            AGENTS_TARGET="$HOME/agents"
-            COMMANDS_TARGET="$HOME/agents/commands"
-        else
-            AGENTS_TARGET="agents"
-            COMMANDS_TARGET="agents/commands"
-        fi
-        ;;
-esac
+if [ "$SCOPE" = "global" ]; then
+    AGENTS_TARGET="$HOME/.claude/agents"
+    COMMANDS_TARGET="$HOME/.claude/commands"
+else
+    AGENTS_TARGET=".claude/agents"
+    COMMANDS_TARGET=".claude/commands"
+fi
 
 echo ""
 echo -e "${BLUE}navox-labs/agents setup${NC}"
 echo "========================"
-echo -e "Platform:  ${GREEN}$PLATFORM${NC}"
 echo -e "Scope:     ${GREEN}$SCOPE${NC}"
 echo -e "Agents:    ${GREEN}$AGENTS${NC}"
 echo -e "Target:    ${GREEN}$AGENTS_TARGET${NC}"
@@ -168,15 +123,8 @@ fi
 echo ""
 echo -e "${GREEN}Done!${NC} Installed $INSTALLED agents to $AGENTS_TARGET"
 echo ""
-
-# Verification
-echo "Verify installation:"
-echo "  ls $AGENTS_TARGET"
-if [ "$PLATFORM" = "claude" ]; then
-    echo ""
-    echo "Try it:"
-    echo "  /hire-team          — see the full team"
-    echo "  /strategist DIAGNOSE — validate an idea"
-    echo "  /agency-run FULL <task> — run a full sprint"
-fi
+echo "Try it:"
+echo "  /hire-team              — see the full team"
+echo "  /strategist DIAGNOSE    — validate an idea"
+echo "  /agency-run FULL <task> — run a full sprint"
 echo ""

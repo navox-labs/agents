@@ -2,3 +2,25 @@
 .claude/settings.local.json
 .agency-workspace/
 eval/results/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+*.egg
+.pytest_cache/
+.venv/
+dist/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+Thumbs.db
+
+# Superpowers (internal brainstorming artifacts)
+docs/superpowers/
