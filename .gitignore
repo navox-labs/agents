@@ -6,7 +6,21 @@ eval/results/
 # Python
 __pycache__/
 *.pyc
+*.pyo
 *.egg-info/
+*.egg
 .pytest_cache/
 .venv/
-*.egg
+dist/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+Thumbs.db
+
+# Superpowers (internal brainstorming artifacts)
+docs/superpowers/

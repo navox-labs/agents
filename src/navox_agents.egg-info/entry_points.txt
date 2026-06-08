@@ -1,2 +1,0 @@
-[console_scripts]
-navox = navox_agents.cli:main
