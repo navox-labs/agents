@@ -91,11 +91,11 @@ class ChainResult:
 
     @property
     def ok(self) -> bool:
-        return all(s.ok or s.cached for s in self.steps) and not self.interrupted
+        return all(s.ok or s.cached or s.status == "SKIPPED" for s in self.steps) and not self.interrupted
 
     @property
     def failed_steps(self) -> list[StepResult]:
-        return [s for s in self.steps if not s.ok and not s.cached]
+        return [s for s in self.steps if not s.ok and not s.cached and s.status != "SKIPPED"]
 
     def summary(self) -> dict:
         return {
@@ -104,6 +104,7 @@ class ChainResult:
             "total_steps": len(self.steps),
             "completed": sum(1 for s in self.steps if s.ok),
             "cached": sum(1 for s in self.steps if s.cached),
+            "skipped": sum(1 for s in self.steps if s.status == "SKIPPED"),
             "failed": len(self.failed_steps),
             "ok": self.ok,
             "started_at": self.started_at,

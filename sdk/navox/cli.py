@@ -9,6 +9,9 @@ Usage:
     navox info <agent_id>       Show agent details
     navox sprint <mode>         Show sprint chain for a mode
     navox summary               Show system summary
+    navox run <mode> "task"     Run a sprint chain (FULL/QUICK/HOTFIX)
+    navox run <mode> "task" --dry-run   Validate chain without API calls
+    navox status                Show journal status for current project
 """
 
 from __future__ import annotations
@@ -52,6 +55,16 @@ def main():
     # summary
     sub.add_parser("summary", help="Show system summary")
 
+    # run
+    p_run = sub.add_parser("run", help="Run a sprint chain autonomously")
+    p_run.add_argument("mode", choices=["full", "quick", "hotfix"], help="Sprint mode")
+    p_run.add_argument("task", help="Task description")
+    p_run.add_argument("--dry-run", action="store_true", help="Validate chain without API calls")
+    p_run.add_argument("--memory", default="", help="Path to project memory file")
+
+    # status
+    sub.add_parser("status", help="Show journal status for current project")
+
     args = parser.parse_args()
 
     if args.command is None:
@@ -78,6 +91,10 @@ def main():
         _cmd_sprint(client, args.mode)
     elif args.command == "summary":
         _cmd_summary(client)
+    elif args.command == "run":
+        _cmd_run(agents_dir, registry_path, args.mode, args.task, args.dry_run, args.memory)
+    elif args.command == "status":
+        _cmd_status()
 
 
 def _cmd_validate(client: AgentClient, agents_dir: Path, agent_id: str | None):
@@ -223,6 +240,75 @@ def _cmd_summary(client: AgentClient):
     print(f"  Utility agents: {s['utility_agents']}")
     print(f"  Sprint modes: {', '.join(s['sprint_modes'])}")
     print(f"  Hard gates: {', '.join(s['hard_gates'])}")
+
+
+def _cmd_run(
+    agents_dir: Path,
+    registry_path: Path,
+    mode: str,
+    task: str,
+    dry_run: bool,
+    memory_path: str,
+):
+    import logging
+    from navox.orchestrator import Orchestrator, format_chain_result
+
+    # Set up logging for the orchestrator
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(message)s",
+    )
+
+    orch = Orchestrator(
+        agents_dir=agents_dir,
+        registry_path=registry_path,
+    )
+
+    if dry_run:
+        result = orch.dry_run(mode, task)
+        print(format_chain_result(result))
+        return
+
+    # Load project memory if provided
+    project_memory = ""
+    if memory_path:
+        mem_file = Path(memory_path)
+        if mem_file.exists():
+            project_memory = mem_file.read_text()
+        else:
+            print(f"Warning: memory file not found: {memory_path}")
+
+    result = orch.run(mode, task, project_memory=project_memory)
+    print(format_chain_result(result))
+
+    if not result.ok:
+        sys.exit(1)
+
+
+def _cmd_status():
+    from navox.journal import Journal
+
+    journal = Journal()
+    s = journal.summary()
+
+    if s["total"] == 0:
+        print("\n  No journal entries found. Run `navox run` to start a sprint.")
+        return
+
+    print(f"\n  Journal Status")
+    print("=" * 50)
+    print(f"  Total steps: {s['total']}")
+    print(f"  Completed: {s['completed']}")
+    print(f"  Failed: {s['failed']}")
+    print(f"  Total duration: {s['total_duration_ms']}ms")
+    print(f"  Total tokens: {s['total_tokens']:,}")
+
+    # Show recent entries
+    entries = journal.entries
+    if entries:
+        print(f"\n  Recent entries:")
+        for entry in entries[-5:]:
+            print(f"    {entry.status:10s} {entry.agent_id} ({entry.mode}) — {entry.duration_ms}ms")
 
 
 def _find_repo_root() -> Path:
