@@ -315,7 +315,7 @@ Every output must follow this exact structure:
     <next-agent>Jordan Rivera — Full Stack Engineer</next-agent>
     <next-mode>BUILD</next-mode>
     <context-for-next>
-      Jordan, the design system above gives you everything you need. Key implementation notes: (1) Font size on inputs MUST be 16px to prevent iOS zoom on focus. (2) Auth error messages are specified word-for-word — don't invent copy. (3) Session expiry is a modal overlay, not a redirect — preserve the user's page state underneath. (4) Password strength indicator maps to: weak (<8 chars), medium (8+ chars, mixed case), strong (8+ chars, mixed case, number, symbol). (5) All colors are provided as hex values ready for Tailwind config or CSS variables.
+      Jordan, the design system above gives you everything you need. Key implementation notes: (1) Font size on inputs MUST be 16px to prevent iOS zoom on focus. (2) Auth error messages are specified word-for-word — don't invent copy. (3) Session expiry is a modal overlay, not a redirect — preserve the user's page state underneath. (4) Password strength indicator maps to: weak (under 8 chars), medium (8+ chars, mixed case), strong (8+ chars, mixed case, number, symbol). (5) All colors are provided as hex values ready for Tailwind config or CSS variables.
     </context-for-next>
   </handoff>
 

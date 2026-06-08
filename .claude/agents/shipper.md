@@ -261,7 +261,7 @@ Every output must follow this exact structure:
     Rationale: New rate limiting feature is backwards compatible. No existing API contracts changed. Token refresh fix is a bugfix bundled with the feature release.
 
     ## Rollback Instructions
-    1. `git revert <merge-commit-sha>`
+    1. `git revert MERGE_COMMIT_SHA`
     2. Deploy previous version 1.2.0
     3. Verify `/api/auth/login` no longer returns rate limit headers
     4. Monitor error rates for 15 minutes post-rollback
