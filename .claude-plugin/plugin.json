@@ -1,6 +1,6 @@
 {
   "name": "navox-agents",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "15-agent AI engineering team for Claude Code. Full sprint cycle: Think, Plan, Build, Review, Test, Ship, Reflect. HITL checkpoints, handoff contracts, eval system, and 3 sprint modes.",
   "author": {
     "name": "Navox Labs",
