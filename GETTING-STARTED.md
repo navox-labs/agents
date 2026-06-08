@@ -97,7 +97,7 @@ cd agents
 bash scripts/setup.sh
 ```
 
-The setup script supports Claude Code, Cursor, Copilot CLI, and Codex. Run `bash scripts/setup.sh --help` for options.
+Run `bash scripts/setup.sh --help` for options (e.g. `--global` to install for all projects).
 
 **Verify it worked:**
 

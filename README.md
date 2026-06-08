@@ -53,14 +53,9 @@ cd agents
 bash scripts/setup.sh
 ```
 
-The setup script supports multiple platforms and options:
+Options:
 
 ```bash
-bash scripts/setup.sh --platform claude    # Claude Code (default)
-bash scripts/setup.sh --platform cursor    # Cursor
-bash scripts/setup.sh --platform copilot   # Copilot CLI
-bash scripts/setup.sh --platform codex     # Codex
-
 bash scripts/setup.sh --global             # Install to home directory (all projects)
 bash scripts/setup.sh --agents strategist,reviewer  # Install specific agents only
 bash scripts/setup.sh --list               # See all available agents
@@ -267,17 +262,6 @@ These aren't decorative. They're enforced in every agent's prompt and checked by
 
 ---
 
-## Multi-platform support
-
-Works on 4 platforms. Zero dependencies on all of them.
-
-| Platform | Install command |
-|---|---|
-| **Claude Code** | `bash scripts/setup.sh --platform claude` |
-| **Cursor** | `bash scripts/setup.sh --platform cursor` |
-| **Copilot CLI** | `bash scripts/setup.sh --platform copilot` |
-| **Codex** | `bash scripts/setup.sh --platform codex` |
-
 ---
 
 ## You stay in control
@@ -308,40 +292,18 @@ Each agent also keeps its own memory in `.claude/memory/[agent].md` with the sam
 
 ---
 
-## Start faster
-
-First time using Navox Agents on a new project?
-Tell the agents your stack once — they'll know it every session.
-
-After installing the agents globally, run this from inside your project folder:
-
-```bash
-cp ~/.claude/templates/nextjs.CLAUDE.md ./CLAUDE.md          # Next.js + Vercel
-cp ~/.claude/templates/node-api.CLAUDE.md ./CLAUDE.md        # Node.js + Express
-cp ~/.claude/templates/rails.CLAUDE.md ./CLAUDE.md           # Rails 8
-cp ~/.claude/templates/python-fastapi.CLAUDE.md ./CLAUDE.md  # Python + FastAPI
-cp ~/.claude/templates/cloudflare-workers.CLAUDE.md ./CLAUDE.md  # Cloudflare Workers
-```
-
-Pick one. The agents read it automatically when Claude Code opens.
-
----
-
 ## Quality assurance
 
-Two validation tools keep the agents sharp:
+Every agent scores **10/10** against a quality rubric covering: frontmatter, modes, handoff contracts, anti-hallucination rules, anti-sycophancy, error handling, structured output, scope boundaries, ethos reference, and memory integration.
 
-**Repo integrity** — structural checks across all files:
+**Validation** — 383 checks across all agents, contracts, and registry:
 ```bash
-bash scripts/validate.sh
+bash scripts/validate.sh    # Structural checks
+navox validate              # Full validation (Python)
+navox score                 # 10-point rubric scoring
 ```
 
-**Agent quality eval** — scores each agent 0-10 against a rubric (frontmatter, modes, handoff contracts, anti-hallucination, memory integration, and more):
-```bash
-bash scripts/eval.sh
-```
-
-Minimum passing score: 8/10. All 14 scored agents currently pass.
+Contributors: see `sdk/` for the Python evaluation system.
 
 ---
 
