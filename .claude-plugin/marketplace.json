@@ -12,7 +12,7 @@
         "source": "github",
         "repo": "navox-labs/agents"
       },
-      "version": "2.0.0",
+      "version": "3.0.0",
       "category": "productivity",
       "keywords": ["agents", "engineering", "devtools", "claude-code", "sprint", "review", "shipping", "debugging", "retrospective"]
     }
