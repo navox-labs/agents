@@ -6,6 +6,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/navox-labs/agents?style=social)](https://github.com/navox-labs/agents)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Built for Claude Code](https://img.shields.io/badge/Built_for-Claude_Code-blueviolet)](https://claude.ai)
+[![GitHub Traffic Agent](https://img.shields.io/badge/Traffic_Agent-Marketplace-blue)](https://github.com/marketplace/actions/github-traffic-agent)
 <img width="2752" height="1536" alt="Game Poster Merge" src="https://github.com/user-attachments/assets/d0bcd837-7438-4267-86f6-75a1810b56f9" />
 
 A Claude Code plugin **and** a Python CLI for autonomous orchestration. Install the plugin for interactive sprints. Use the SDK to run your team while you sleep.
@@ -383,6 +384,16 @@ cd sdk && python -m pytest tests/ -q
 - Not a walled garden. The source is open — fork it, customize the prompts, make it yours.
 - Not storing your data. Everything runs locally through Claude Code.
 - Not black-box autonomous. The SDK runs autonomously but every step is evaluated, journaled, and resumable.
+
+---
+
+## More from Navox Labs
+
+| Project | What it does |
+|---|---|
+| [GitHub Traffic Agent](https://github.com/navox-labs/github-traffic-agent) | AI-powered GitHub Action that collects traffic data daily, analyzes trends, and sends Claude-powered briefs to Slack. Solves the 14-day retention limit. |
+| [nom.sh](https://github.com/navox-labs/nom) | A crab cookie clicker — built entirely by Navox Agents in 7 minutes, zero human edits. |
+| [PipeWar](https://github.com/navox-labs/pipewar) | Factorio-inspired tower defense game — built, debugged, and deployed by the agent team. |
 
 ---
 
