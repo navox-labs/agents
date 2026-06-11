@@ -1,0 +1,62 @@
+[
+  {
+    "path": "/navox-labs/agents",
+    "title": "Overview",
+    "count": 99,
+    "uniques": 16
+  },
+  {
+    "path": "/navox-labs/agents/graphs/traffic",
+    "title": "/graphs/traffic",
+    "count": 49,
+    "uniques": 1
+  },
+  {
+    "path": "/navox-labs/agents/pulse",
+    "title": "/pulse",
+    "count": 41,
+    "uniques": 1
+  },
+  {
+    "path": "/navox-labs/agents/network",
+    "title": "/network",
+    "count": 7,
+    "uniques": 1
+  },
+  {
+    "path": "/navox-labs/agents/discussions",
+    "title": "/discussions",
+    "count": 6,
+    "uniques": 2
+  },
+  {
+    "path": "/navox-labs/agents/pulls",
+    "title": "/pulls",
+    "count": 5,
+    "uniques": 1
+  },
+  {
+    "path": "/navox-labs/agents/pull/3",
+    "title": "/pull/3",
+    "count": 4,
+    "uniques": 1
+  },
+  {
+    "path": "/navox-labs/agents/tree/main/docs",
+    "title": "/tree/main/docs",
+    "count": 4,
+    "uniques": 1
+  },
+  {
+    "path": "/navox-labs/agents/tree/main/eval",
+    "title": "/tree/main/eval",
+    "count": 3,
+    "uniques": 3
+  },
+  {
+    "path": "/navox-labs/agents/tree/main/scripts",
+    "title": "/tree/main/scripts",
+    "count": 3,
+    "uniques": 3
+  }
+]
