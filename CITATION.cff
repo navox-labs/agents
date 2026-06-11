@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use Navox Agents, please cite it as below."
+title: "Navox Agents"
+authors:
+  - family-names: "Oda"
+    given-names: "Nahrin"
+type: software
+url: "https://github.com/navox-labs/agents"
+repository-code: "https://github.com/navox-labs/agents"
+license: MIT
+keywords:
+  - ai-agents
+  - claude-code
+  - software-development
+  - multi-agent
+  - code-review
+  - developer-tools
