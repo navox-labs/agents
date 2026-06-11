@@ -8,6 +8,12 @@
 [![Built for Claude Code](https://img.shields.io/badge/Built_for-Claude_Code-blueviolet)](https://claude.ai)
 <img width="2752" height="1536" alt="Game Poster Merge" src="https://github.com/user-attachments/assets/d0bcd837-7438-4267-86f6-75a1810b56f9" />
 
+> **One plugin. 15 agents. Full sprint cycle.** Install in 30 seconds — no dependencies, no platform, no login.
+>
+> ```
+> /plugin marketplace add https://github.com/navox-labs/agents
+> ```
+
 A Claude Code plugin **and** a Python CLI for autonomous orchestration. Install the plugin for interactive sprints. Use the SDK to run your team while you sleep.
 
 ---
@@ -48,6 +54,30 @@ And if you want to hate on free open-source software — you're welcome to, but 
 
 ---
 
+## What happens when you run it
+
+```
+$ /agency-run FULL Build a cookie clicker game with crab theme
+
+→ Strategist: "Single HTML file is smart — no build step, instant deploy.
+   But cookie clickers need prestige mechanics to retain players. Adding to spec."
+→ Spec Writer: 7-section spec with 12 acceptance criteria
+→ Architect: Component tree, state machine, CSS custom properties for theming
+→ Gate 1: You review. You approve.
+→ UX + Security: Running in parallel...
+→ Full Stack: 1,330 lines written. All acceptance criteria met.
+→ Checkpoint: App running at localhost:3000 — LGTM / FEEDBACK / STOP?
+→ Reviewer: 7 specialists. 2 issues found. Auto-fixed.
+→ QA: 6 bugs caught. 6 bugs fixed. 14 tests passing.
+→ Security: No vulnerabilities. Auth N/A. Cleared.
+→ Shipper: v1.0.0 tagged. PR #1 created.
+→ Retro: 4 learnings captured to project memory.
+
+Total time: 7 minutes. Human edits: 0.
+```
+
+---
+
 ## See it work
 
 **nom.sh — one prompt, 7 minutes:**
@@ -74,9 +104,11 @@ Then install:
 /reload-plugins
 ```
 
-> If this saves you time, [star the repo](https://github.com/navox-labs/agents) — it helps others find it.
-
 > **Note:** Plugin commands are namespaced. Use `/navox-agents:agency-run` and `/navox-agents:hire-team` instead of `/agency-run` and `/hire-team`. If you installed via the manual method below, no namespace is needed.
+
+---
+
+**If Navox Agents saves you time, [give it a star](https://github.com/navox-labs/agents).** It helps other builders find it.
 
 ---
 
