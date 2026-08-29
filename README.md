@@ -1,6 +1,6 @@
 # Navox Agents
 
-> 15 AI specialists. One sprint cycle. Zero dependencies.
+> 19 AI specialists. One sprint cycle. Zero dependencies.
 > Think. Plan. Build. Review. Test. Ship. Reflect.
 
 [![GitHub stars](https://img.shields.io/github/stars/navox-labs/agents?style=social)](https://github.com/navox-labs/agents)
@@ -44,7 +44,7 @@ And if you want to hate on free open-source software — you're welcome to, but 
 
 **Tech leads and staff engineers** — orchestrated specialist agents that follow your architecture decisions, not fight them. Sprint chains enforce the same discipline you'd expect from a senior team.
 
-**Solo builders** — one person, 15 specialists. The math works.
+**Solo builders** — one person, 19 specialists. The math works.
 
 ---
 
@@ -105,6 +105,26 @@ cp ETHOS.md ~/.claude/ETHOS.md
 
 ---
 
+## Two ways to run the same team
+
+The 19 agents are markdown prompts in `.claude/agents/`. Two different engines
+can run them, and which you pick changes only who orchestrates the handoffs.
+
+| | **Plugin** | **SDK** |
+|---|---|---|
+| Start it with | `/agency-run` inside Claude Code | `navox run --mode full "..."` |
+| Orchestrated by | Claude Code's subagent system | `sdk/navox/orchestrator.py` |
+| Agent prompts | `.claude/agents/*.md` | the same files |
+| Billing | Your Claude subscription | Anthropic API credit |
+| Best for | Day-to-day work, and anything on a Claude plan | A headless daemon on a VM |
+| Notifications | `.claude/hooks/notify-telegram.sh` | `sdk/navox/notify.py` |
+
+Same team, same handoff contracts, same sprint chains. If you are on a Pro or
+Max plan, use the plugin — the SDK calls the API directly and cannot use a
+subscription.
+
+---
+
 ## The sprint
 
 Three modes. Pick one based on what you need.
@@ -123,6 +143,15 @@ No authentication. No backend. Single HTML file.
 
 ```
 /agency-run QUICK Add a {dark mode toggle} to the settings page
+```
+
+### Mobile — full rigour for React Native and Expo
+
+Adds the plan critic, a privacy gate at both design and launch, and a
+dual-platform device checkpoint in place of the browser-based one.
+
+```
+/agency-run mobile "Build the shift logger"
 ```
 
 ### Hotfix — bug to fix to ship
@@ -236,13 +265,17 @@ flowchart TD
 | **Spec Writer** | Turns vague ideas into precise, testable specifications. |
 | **Architect** | Designs the system. Picks the stack. Defines auth. |
 | **UI/UX** | Maps user flows. Specs every screen and state. |
+| **Critic** | Adversarially reviews the plan before any code exists. |
 | **Full Stack** | Builds it. Tests it. Ships clean code. |
+| **Mobile** | React Native and Expo. EAS pipeline. Device budgets. Store submission. |
 | **Investigator** | Root-cause debugging. No fixes without diagnosis. |
 | **Reviewer** | 7-specialist parallel review army. |
 | **DevOps** | CI/CD. Docker. Deploys. Secrets never touch code. |
 | **Local Review** | Starts the app. Shows it to you. Waits for your go. |
+| **Device Review** | Mobile checkpoint. Both simulators, screenshots, performance budgets. |
 | **QA** | Finds every bug. Auth flows get extra scrutiny. |
 | **Security** | OWASP + STRIDE audits. Nothing launches without a verdict. |
+| **Privacy** | Reidentification, k-anonymity, retention. Vetoes identity leaks. |
 | **Shipper** | Tests, changelog, version bump, PR. The last mile. |
 | **Retro** | Sprint retrospectives. Learnings compound over time. |
 | **Context Manager** | Session persistence. Pause any sprint, resume later. |
@@ -256,7 +289,7 @@ flowchart TD
 
 | | **Navox Agents** | **gstack** |
 |---|---|---|
-| **Architecture** | 15 specialist agents with defined roles, handoff contracts, and sprint chains | 23 workflow skills, each independent |
+| **Architecture** | 19 specialist agents with defined roles, handoff contracts, and sprint chains | 23 workflow skills, each independent |
 | **Orchestration** | Full sprint chains — agents hand off to each other in sequence with parallel groups | No inter-skill orchestration — each skill runs standalone |
 | **Reliability model** | Eval-gated retries (8/10 threshold), self-validation checklists, handoff contract enforcement | Confusion Protocol stops guessing, but no automated quality gates between steps |
 | **Quality assurance** | 10-point rubric scoring, 383 validation checks, 91 SDK tests, deterministic eval after every step | Manual review points, no automated scoring |
@@ -351,10 +384,47 @@ navox status
 ```
 
 Features:
+- **Model tiers** — agents declare `opus` or `sonnet`, resolved by one `model_tiers` map in the registry, so a model refresh is a one-line change
+- **Hard budget caps** — `NAVOX_BUDGET_USD` halts the chain rather than warning
+- **Notifications** — step, gate, escalation and completion events to Telegram, Slack or email
 - **Eval-gated retries** — deterministic grading after each step (8/10 threshold), auto-retry with feedback
 - **Content-addressed journaling** — same task resumes from where it left off
 - **Parallel execution** — agents in the same group run concurrently with failure containment
 - **Stop reason handling** — all 6 Anthropic API stop reasons handled (end_turn, max_tokens, refusal, etc.)
+
+---
+
+## Unattended operation
+
+Three modules for leaving a run alone. Full guide in [`docs/unattended.md`](docs/unattended.md).
+
+**Notifications** — a run you cannot see is a run you cannot supervise. Telegram,
+Slack and email fan-out, with escalations carrying the exact question and valid
+replies so you can unblock a chain from your phone. Delivery failures are logged
+and swallowed; a dead webhook never kills a sprint.
+
+Both runtimes are covered: `sdk/navox/notify.py` for the SDK,
+`.claude/hooks/notify-telegram.sh` for the plugin. See
+[`docs/notifications.md`](docs/notifications.md).
+
+```bash
+export NAVOX_TELEGRAM_BOT_TOKEN=...   # @BotFather
+export NAVOX_TELEGRAM_CHAT_ID=...     # @userinfobot
+export NAVOX_NOTIFY_LEVEL=milestones  # all | milestones | urgent
+```
+
+**Budget caps** (SDK) — an advisory token budget is not a budget. Hard USD and
+token caps, warnings at 50/75/90%, chain halt at 100%, thread-safe because
+parallel groups charge concurrently.
+
+```bash
+export NAVOX_BUDGET_USD=25
+export NAVOX_BUDGET_ACTION=halt       # halt | warn
+```
+
+**Worktree isolation** (SDK) — parallel agents sharing a checkout silently
+overwrite each other. Each gets its own git worktree. Merge conflicts **raise**
+rather than auto-resolve: unattended conflict resolution loses work.
 
 ---
 
