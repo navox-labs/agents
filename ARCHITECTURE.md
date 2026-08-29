@@ -1,6 +1,6 @@
 # ARCHITECTURE — How the Agent System Works
 
-This document explains how the 15-agent engineering team operates: how agents are structured, how they communicate, and how the sprint cycle orchestrates them.
+This document explains how the 19-agent engineering team operates: how agents are structured, how they communicate, and how the sprint cycle orchestrates them.
 
 ---
 
@@ -10,11 +10,12 @@ This document explains how the 15-agent engineering team operates: how agents ar
 |---|---|---|---|
 | **Strategic** | 2 | Validate ideas and create specs before building | strategist, spec-writer |
 | **Design** | 2 | System and UX architecture | architect, ux |
-| **Build** | 2 | Write code and deploy infrastructure | fullstack, devops |
-| **Quality** | 3 | Review, test, and secure the code | reviewer, qa, security |
+| **Critique** | 1 | Adversarially review the plan before code exists | critic |
+| **Build** | 3 | Write code and deploy infrastructure | fullstack, mobile, devops |
+| **Quality** | 4 | Review, test, secure, and de-identify | reviewer, qa, security, privacy |
 | **Ship** | 1 | Release engineering — tests to PR | shipper |
 | **Operations** | 3 | Debug, learn, and persist context | investigator, retro, context-manager |
-| **Utility** | 2 | Install agents and visual review | installer, local-review |
+| **Utility** | 3 | Install agents, visual review, device review | installer, local-review, device-review |
 
 ## Agent Prompt Structure
 
@@ -60,6 +61,46 @@ INVESTIGATE → investigator
 BUILD       → fullstack
 SHIP        → shipper
 ```
+
+### MOBILE Sprint (12 groups)
+Full rigour, tuned for React Native / Expo. Adds the plan critic, a privacy
+gate at both design and launch, and a dual-platform device checkpoint in place
+of the browser-based one.
+```
+THINK    → strategist DIAGNOSE
+PLAN     → spec-writer WRITE → architect DESIGN → critic CRITIQUE
+DESIGN   → parallel(ux, security, privacy)
+BUILD    → mobile BUILD → device-review REVIEW
+REVIEW   → reviewer REVIEW
+TEST     → parallel(qa TEST-RUN, security CODE-AUDIT)
+GATE     → privacy LAUNCH-REVIEW
+SHIP     → shipper SHIP → retro RETRO
+```
+
+## Why a plan critic
+
+The `critic` agent sits between design and build for one reason: the author of
+a plan is invested in it, and a second model reading it cold catches
+contradictions the author cannot see. It reviews the plan, never the code —
+`reviewer` does that later, when changes are expensive. Findings are separated
+into contradictions (two sections disagree), gaps (nothing says), and risks
+(it says something and it may be wrong), because those need different fixes.
+
+## Unattended operation
+
+Three modules make a run safe to leave alone. See `docs/unattended.md`.
+
+| Module | Problem it solves |
+|---|---|
+| `sdk/navox/notify.py` | A run you cannot see is a run you cannot supervise. Telegram, Slack, and email fan-out. Escalations carry the exact question and valid replies so a chain can be unblocked from a phone. Never raises into the chain |
+| `sdk/navox/budget.py` | An advisory token budget is not a budget. Hard USD and token caps, warnings at 50/75/90%, chain halt at 100%. Thread-safe, because parallel groups charge concurrently |
+| `sdk/navox/worktree.py` | Parallel agents sharing one checkout silently overwrite each other. Each gets an isolated git worktree; merge conflicts **raise** rather than auto-resolve, because unattended conflict resolution loses work |
+
+## Model selection
+
+Agents declare a `model_tier` (`opus` / `sonnet`). The registry's `model_tiers`
+map resolves a tier to a concrete model id in one place, so a model refresh is
+a single-line change rather than an edit to every agent file.
 
 ## Handoff Contract System
 
