@@ -1,6 +1,43 @@
 # Notifications
 
-`sdk/navox/notify.py` — how an unattended run reaches you.
+How an unattended run reaches you. **Two runtimes, two notifiers** — pick the
+one matching how you start your agents:
+
+| You run agents with | Notifier | Fires on |
+|---|---|---|
+| Claude Code plugin (`/agency-run`) | `.claude/hooks/notify-telegram.sh` | Claude Code lifecycle events |
+| Python SDK (`navox run`) | `sdk/navox/notify.py` | Orchestrator step boundaries |
+
+The SDK notifier lives inside `Orchestrator.run_chain`, so it sends nothing on
+the plugin path — there is no orchestrator process there, Claude Code runs the
+agents itself. Wire the hook instead.
+
+## Plugin: the Claude Code hook
+
+Add to `.claude/settings.json`:
+
+```json
+{
+  "hooks": {
+    "Notification": [{"hooks": [{"type": "command",
+      "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/notify-telegram.sh needs-you"}]}],
+    "Stop": [{"hooks": [{"type": "command",
+      "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/notify-telegram.sh done"}]}]
+  }
+}
+```
+
+`Notification` means Claude is waiting on you and sends with sound. `Stop` is a
+turn completing and sends silently. The script sources a project-root `.env` if
+one exists, and always exits 0 — a dead webhook must not interrupt a session.
+
+Test it:
+
+```bash
+echo '{"message":"test"}' | ./.claude/hooks/notify-telegram.sh needs-you
+```
+
+## SDK: `sdk/navox/notify.py`
 
 ## Why Telegram is the default recommendation
 
