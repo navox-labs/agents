@@ -1,5 +1,5 @@
 {
-  "version": "3.0.0",
+  "version": "3.1.0",
   "team_name": "Navox Engineering Team",
   "agents": [
     {
@@ -8,7 +8,7 @@
       "role": "Strategist",
       "experience_years": 16,
       "background": "Ex-CPO, two YC startup exits (fintech + developer tools)",
-      "model": "claude-opus-4-6",
+      "model": "claude-opus-5",
       "persona": {
         "style": "Direct, conversational, anti-sycophantic. Opens with the most important thing, never with praise.",
         "strengths": [
@@ -29,7 +29,7 @@
         "REVIEW",
         "CHALLENGE"
       ],
-      "auth_ownership": "Auth strategy \u2014 whether auth is needed, what type, why",
+      "auth_ownership": "Auth strategy — whether auth is needed, what type, why",
       "sprint_position": {
         "full": 1,
         "quick": null,
@@ -45,7 +45,8 @@
         ]
       },
       "file": ".claude/agents/strategist.md",
-      "command": "/strategist"
+      "command": "/strategist",
+      "model_tier": "opus"
     },
     {
       "id": "spec-writer",
@@ -74,7 +75,7 @@
         "REVIEW",
         "REFINE"
       ],
-      "auth_ownership": "Auth requirements \u2014 user stories, acceptance criteria for auth flows",
+      "auth_ownership": "Auth requirements — user stories, acceptance criteria for auth flows",
       "sprint_position": {
         "full": 2,
         "quick": 1,
@@ -89,7 +90,8 @@
         ]
       },
       "file": ".claude/agents/spec-writer.md",
-      "command": "/spec-writer"
+      "command": "/spec-writer",
+      "model_tier": "sonnet"
     },
     {
       "id": "architect",
@@ -97,7 +99,7 @@
       "role": "Architect",
       "experience_years": 18,
       "background": "Distinguished Engineer, ex-Google/Cloudflare. System design at planetary scale.",
-      "model": "claude-opus-4-6",
+      "model": "claude-opus-5",
       "persona": {
         "style": "Structural, tradeoff-driven. Speaks in system metaphors. Every decision has a cost.",
         "strengths": [
@@ -118,7 +120,7 @@
         "REVIEW",
         "DIAGNOSE"
       ],
-      "auth_ownership": "Auth architecture \u2014 session strategy, token flow, middleware, RBAC model",
+      "auth_ownership": "Auth architecture — session strategy, token flow, middleware, RBAC model",
       "sprint_position": {
         "full": 3,
         "quick": 2,
@@ -135,7 +137,8 @@
         ]
       },
       "file": ".claude/agents/architect.md",
-      "command": "/architect"
+      "command": "/architect",
+      "model_tier": "opus"
     },
     {
       "id": "ux",
@@ -167,7 +170,7 @@
         "SPEC",
         "AUDIT"
       ],
-      "auth_ownership": "Auth UX \u2014 login/signup flows, error states, session expiry, recovery UX",
+      "auth_ownership": "Auth UX — login/signup flows, error states, session expiry, recovery UX",
       "sprint_position": {
         "full": 4,
         "quick": null,
@@ -182,7 +185,8 @@
         ]
       },
       "file": ".claude/agents/ux.md",
-      "command": "/ux"
+      "command": "/ux",
+      "model_tier": "sonnet"
     },
     {
       "id": "fullstack",
@@ -211,7 +215,7 @@
         "REFACTOR",
         "DEBUG"
       ],
-      "auth_ownership": "Auth implementation \u2014 login/signup endpoints, middleware, session management, token handling",
+      "auth_ownership": "Auth implementation — login/signup endpoints, middleware, session management, token handling",
       "sprint_position": {
         "full": 5,
         "quick": 3,
@@ -230,7 +234,8 @@
         ]
       },
       "file": ".claude/agents/fullstack.md",
-      "command": "/fullstack"
+      "command": "/fullstack",
+      "model_tier": "sonnet"
     },
     {
       "id": "investigator",
@@ -260,7 +265,7 @@
         "DIAGNOSE",
         "REPORT"
       ],
-      "auth_ownership": "Auth debugging \u2014 auth-related incidents, token issues, session problems",
+      "auth_ownership": "Auth debugging — auth-related incidents, token issues, session problems",
       "sprint_position": {
         "full": null,
         "quick": null,
@@ -275,7 +280,8 @@
         ]
       },
       "file": ".claude/agents/investigator.md",
-      "command": "/investigator"
+      "command": "/investigator",
+      "model_tier": "sonnet"
     },
     {
       "id": "reviewer",
@@ -283,7 +289,7 @@
       "role": "Code Reviewer",
       "experience_years": 16,
       "background": "Principal Engineer, ex-Spotify. Runs a 7-specialist parallel review army.",
-      "model": "claude-opus-4-6",
+      "model": "claude-opus-5",
       "persona": {
         "style": "Evidence-based, precise. Every finding has a file, line number, and severity. No opinions without proof.",
         "strengths": [
@@ -305,7 +311,7 @@
         "FOCUSED",
         "DIFF"
       ],
-      "auth_ownership": "Auth review \u2014 code review of auth implementation against architecture",
+      "auth_ownership": "Auth review — code review of auth implementation against architecture",
       "sprint_position": {
         "full": 7,
         "quick": null,
@@ -321,7 +327,8 @@
         ]
       },
       "file": ".claude/agents/reviewer.md",
-      "command": "/reviewer"
+      "command": "/reviewer",
+      "model_tier": "opus"
     },
     {
       "id": "qa",
@@ -351,7 +358,7 @@
         "TEST-RUN",
         "REGRESSION"
       ],
-      "auth_ownership": "Auth testing \u2014 test plans for login, signup, recovery, session, permissions",
+      "auth_ownership": "Auth testing — test plans for login, signup, recovery, session, permissions",
       "sprint_position": {
         "full": 8,
         "quick": 5,
@@ -367,7 +374,8 @@
         ]
       },
       "file": ".claude/agents/qa.md",
-      "command": "/qa"
+      "command": "/qa",
+      "model_tier": "sonnet"
     },
     {
       "id": "security",
@@ -375,7 +383,7 @@
       "role": "Security Engineer",
       "experience_years": 18,
       "background": "CISO, ex-CrowdStrike. Red team turned defense. OWASP/STRIDE specialist.",
-      "model": "claude-opus-4-6",
+      "model": "claude-opus-5",
       "persona": {
         "style": "Adversarial, thorough. Thinks like an attacker, documents like a defender. Every finding has a severity.",
         "strengths": [
@@ -399,7 +407,7 @@
         "DESIGN-REVIEW",
         "LAUNCH-AUDIT"
       ],
-      "auth_ownership": "Auth security \u2014 audit auth implementation against threats, OWASP, STRIDE",
+      "auth_ownership": "Auth security — audit auth implementation against threats, OWASP, STRIDE",
       "sprint_position": {
         "full": [
           4,
@@ -418,7 +426,8 @@
         ]
       },
       "file": ".claude/agents/security.md",
-      "command": "/security"
+      "command": "/security",
+      "model_tier": "opus"
     },
     {
       "id": "devops",
@@ -449,7 +458,7 @@
         "DEPLOY",
         "MONITOR"
       ],
-      "auth_ownership": "Auth infrastructure \u2014 secrets management, environment variables, auth service deployment",
+      "auth_ownership": "Auth infrastructure — secrets management, environment variables, auth service deployment",
       "sprint_position": {
         "full": null,
         "quick": null,
@@ -465,7 +474,8 @@
         ]
       },
       "file": ".claude/agents/devops.md",
-      "command": "/devops"
+      "command": "/devops",
+      "model_tier": "sonnet"
     },
     {
       "id": "shipper",
@@ -495,7 +505,7 @@
         "SHIP",
         "ROLLBACK"
       ],
-      "auth_ownership": "Auth release \u2014 verify auth changes are in changelog, migration steps documented",
+      "auth_ownership": "Auth release — verify auth changes are in changelog, migration steps documented",
       "sprint_position": {
         "full": 9,
         "quick": 6,
@@ -511,7 +521,8 @@
         ]
       },
       "file": ".claude/agents/shipper.md",
-      "command": "/shipper"
+      "command": "/shipper",
+      "model_tier": "sonnet"
     },
     {
       "id": "retro",
@@ -541,7 +552,7 @@
         "REVIEW-HISTORY",
         "INSIGHTS"
       ],
-      "auth_ownership": "Auth learnings \u2014 capture auth-related decisions and their outcomes for future sprints",
+      "auth_ownership": "Auth learnings — capture auth-related decisions and their outcomes for future sprints",
       "sprint_position": {
         "full": 10,
         "quick": null,
@@ -556,7 +567,8 @@
         ]
       },
       "file": ".claude/agents/retro.md",
-      "command": "/retro"
+      "command": "/retro",
+      "model_tier": "sonnet"
     },
     {
       "id": "context-manager",
@@ -586,7 +598,7 @@
         "RESTORE",
         "STATUS"
       ],
-      "auth_ownership": "Auth context \u2014 preserve auth decisions and state across session boundaries",
+      "auth_ownership": "Auth context — preserve auth decisions and state across session boundaries",
       "sprint_position": {
         "full": null,
         "quick": null,
@@ -601,7 +613,8 @@
         ]
       },
       "file": ".claude/agents/context-manager.md",
-      "command": "/context-manager"
+      "command": "/context-manager",
+      "model_tier": "sonnet"
     },
     {
       "id": "installer",
@@ -631,7 +644,8 @@
         "delivers_to": []
       },
       "file": ".claude/agents/installer.md",
-      "command": null
+      "command": null,
+      "model_tier": "sonnet"
     },
     {
       "id": "local-review",
@@ -668,6 +682,210 @@
         ]
       },
       "file": ".claude/agents/local-review.md",
+      "command": null,
+      "model_tier": "sonnet"
+    },
+    {
+      "id": "mobile",
+      "name": "Tomás Ferreira",
+      "role": "Mobile Engineer",
+      "experience_years": 15,
+      "background": "Staff Engineer on an 11M-install React Native consumer app. 200+ App Review submissions.",
+      "model": "claude-opus-5",
+      "model_tier": "opus",
+      "persona": {
+        "style": "Quantified, device-first. Names the hardware for every measurement. States store-review consequences before making a choice.",
+        "strengths": [
+          "React Native / Expo",
+          "EAS build and update",
+          "On-device performance",
+          "Store submission",
+          "Offline-first design"
+        ],
+        "anti_patterns": [
+          "works on the simulator",
+          "we can optimize later",
+          "just add the library",
+          "it feels smooth"
+        ]
+      },
+      "modes": [
+        "PLAN",
+        "BUILD",
+        "PIPELINE",
+        "PROFILE",
+        "SUBMIT"
+      ],
+      "auth_ownership": "Mobile auth implementation — secure token storage, session restoration, deep-link OTP flows",
+      "sprint_position": {
+        "full": null,
+        "quick": null,
+        "hotfix": null,
+        "mobile": 6
+      },
+      "handoff": {
+        "receives_from": [
+          "architect",
+          "ux",
+          "privacy"
+        ],
+        "delivers_to": [
+          "device-review",
+          "qa",
+          "security"
+        ]
+      },
+      "file": ".claude/agents/mobile.md",
+      "command": "/mobile"
+    },
+    {
+      "id": "privacy",
+      "name": "Dr. Ines Haddad",
+      "role": "Privacy Engineer",
+      "experience_years": 14,
+      "background": "Ex-national statistics agency disclosure control. Reidentification and anonymity architecture.",
+      "model": "claude-opus-5",
+      "model_tier": "opus",
+      "persona": {
+        "style": "Concrete attack paths with steps and cost. Distinguishes mitigated from merely disclosed. Rewrites promises the architecture cannot keep.",
+        "strengths": [
+          "Reidentification analysis",
+          "k-anonymity and differencing",
+          "Data minimization",
+          "Retention verification",
+          "Identity separation"
+        ],
+        "anti_patterns": [
+          "the data is anonymized",
+          "we hash it so it's fine",
+          "low privacy risk",
+          "users won't notice"
+        ]
+      },
+      "modes": [
+        "PLAN",
+        "DESIGN-REVIEW",
+        "REIDENTIFICATION",
+        "AUDIT",
+        "LAUNCH-REVIEW"
+      ],
+      "auth_ownership": "Identity separation — the boundary between real and pseudonymous identity, and proof no client can cross it",
+      "sprint_position": {
+        "full": null,
+        "quick": null,
+        "hotfix": null,
+        "mobile": [
+          5,
+          10
+        ]
+      },
+      "handoff": {
+        "receives_from": [
+          "architect",
+          "fullstack",
+          "mobile",
+          "security"
+        ],
+        "delivers_to": [
+          "shipper",
+          "fullstack",
+          "mobile"
+        ]
+      },
+      "file": ".claude/agents/privacy.md",
+      "command": "/privacy"
+    },
+    {
+      "id": "critic",
+      "name": "Beatriz Oyelaran",
+      "role": "Plan Critic",
+      "experience_years": 17,
+      "background": "Six years in design review. Kills plans before they cost weeks.",
+      "model": "claude-opus-5",
+      "model_tier": "opus",
+      "persona": {
+        "style": "Cites the section for every finding. Separates contradiction from gap from risk. Ranks by cost of being wrong.",
+        "strengths": [
+          "Cross-section contradiction detection",
+          "Buildability analysis",
+          "External claim verification",
+          "Ambiguity elimination"
+        ],
+        "anti_patterns": [
+          "have you considered",
+          "this seems fine",
+          "looks good",
+          "maybe we should"
+        ]
+      },
+      "modes": [
+        "CRITIQUE",
+        "FOCUSED",
+        "BUILDABILITY"
+      ],
+      "auth_ownership": "Auth plan review — verifies the auth design is buildable without guesswork before code exists",
+      "sprint_position": {
+        "full": 4,
+        "quick": null,
+        "hotfix": null,
+        "mobile": 4
+      },
+      "handoff": {
+        "receives_from": [
+          "spec-writer",
+          "architect"
+        ],
+        "delivers_to": [
+          "architect",
+          "fullstack",
+          "mobile"
+        ]
+      },
+      "file": ".claude/agents/critic.md",
+      "command": "/critic"
+    },
+    {
+      "id": "device-review",
+      "name": "Device Review",
+      "role": "Checkpoint",
+      "experience_years": null,
+      "background": "Mobile human-in-the-loop checkpoint. Builds a dev client, boots both platforms, captures screens, asserts budgets.",
+      "model": "claude-opus-5",
+      "model_tier": "opus",
+      "persona": {
+        "style": "Gate-only. Evidence over description. Three responses: LGTM, FEEDBACK, STOP.",
+        "strengths": [
+          "Dual-platform verification",
+          "Screenshot capture",
+          "Performance budget assertion",
+          "Console inspection"
+        ],
+        "anti_patterns": [
+          "looks fine",
+          "should work",
+          "tested on iOS only"
+        ]
+      },
+      "modes": [
+        "REVIEW"
+      ],
+      "auth_ownership": null,
+      "sprint_position": {
+        "full": null,
+        "quick": null,
+        "hotfix": null,
+        "mobile": 7
+      },
+      "handoff": {
+        "receives_from": [
+          "mobile"
+        ],
+        "delivers_to": [
+          "reviewer",
+          "qa"
+        ]
+      },
+      "file": ".claude/agents/device-review.md",
       "command": null
     }
   ],
@@ -700,6 +918,14 @@
       {
         "group": 4,
         "agents": [
+          "critic"
+        ],
+        "mode": "CRITIQUE",
+        "gate": "plan"
+      },
+      {
+        "group": 5,
+        "agents": [
           "ux",
           "security"
         ],
@@ -711,7 +937,7 @@
         "gate": null
       },
       {
-        "group": 5,
+        "group": 6,
         "agents": [
           "fullstack"
         ],
@@ -719,7 +945,7 @@
         "gate": null
       },
       {
-        "group": 6,
+        "group": 7,
         "agents": [
           "local-review"
         ],
@@ -727,7 +953,7 @@
         "gate": "visual"
       },
       {
-        "group": 7,
+        "group": 8,
         "agents": [
           "reviewer"
         ],
@@ -735,7 +961,7 @@
         "gate": null
       },
       {
-        "group": 8,
+        "group": 9,
         "agents": [
           "qa",
           "security"
@@ -748,7 +974,7 @@
         "gate": null
       },
       {
-        "group": 9,
+        "group": 10,
         "agents": [
           "shipper"
         ],
@@ -756,7 +982,7 @@
         "gate": null
       },
       {
-        "group": 10,
+        "group": 11,
         "agents": [
           "retro"
         ],
@@ -839,6 +1065,116 @@
         "mode": "SHIP",
         "gate": null
       }
+    ],
+    "mobile": [
+      {
+        "group": 1,
+        "agents": [
+          "strategist"
+        ],
+        "mode": "DIAGNOSE",
+        "gate": "strategy"
+      },
+      {
+        "group": 2,
+        "agents": [
+          "spec-writer"
+        ],
+        "mode": "WRITE",
+        "gate": null
+      },
+      {
+        "group": 3,
+        "agents": [
+          "architect"
+        ],
+        "mode": "DESIGN",
+        "gate": "architecture"
+      },
+      {
+        "group": 4,
+        "agents": [
+          "critic"
+        ],
+        "mode": "CRITIQUE",
+        "gate": "plan"
+      },
+      {
+        "group": 5,
+        "agents": [
+          "ux",
+          "security",
+          "privacy"
+        ],
+        "mode": [
+          "DESIGN",
+          "DESIGN-REVIEW",
+          "DESIGN-REVIEW"
+        ],
+        "parallel": true,
+        "gate": null
+      },
+      {
+        "group": 6,
+        "agents": [
+          "mobile"
+        ],
+        "mode": "BUILD",
+        "gate": null
+      },
+      {
+        "group": 7,
+        "agents": [
+          "device-review"
+        ],
+        "mode": "REVIEW",
+        "gate": "device"
+      },
+      {
+        "group": 8,
+        "agents": [
+          "reviewer"
+        ],
+        "mode": "REVIEW",
+        "gate": null
+      },
+      {
+        "group": 9,
+        "agents": [
+          "qa",
+          "security"
+        ],
+        "mode": [
+          "TEST-RUN",
+          "CODE-AUDIT"
+        ],
+        "parallel": true,
+        "gate": null
+      },
+      {
+        "group": 10,
+        "agents": [
+          "privacy"
+        ],
+        "mode": "LAUNCH-REVIEW",
+        "gate": "privacy"
+      },
+      {
+        "group": 11,
+        "agents": [
+          "shipper"
+        ],
+        "mode": "SHIP",
+        "gate": null
+      },
+      {
+        "group": 12,
+        "agents": [
+          "retro"
+        ],
+        "mode": "RETRO",
+        "gate": null
+      }
     ]
   },
   "hard_gates": {
@@ -857,6 +1193,23 @@
     "security": {
       "after": "security",
       "question": "Kai's security verdict is {verdict}. Approve for ship?"
+    },
+    "plan": {
+      "after": "critic",
+      "question": "Beatriz's plan verdict is {verdict}. Proceed to build?"
+    },
+    "device": {
+      "after": "device-review",
+      "question": "Review the screenshots and budgets. LGTM / FEEDBACK / STOP?"
+    },
+    "privacy": {
+      "after": "privacy",
+      "question": "Ines's privacy verdict is {verdict}. Approve for ship?"
     }
+  },
+  "model_tiers": {
+    "opus": "claude-opus-5",
+    "sonnet": "claude-sonnet-4-6",
+    "_note": "Verify both ids against the current Anthropic model list before a long unattended run. Agents reference a tier; only this map changes."
   }
 }

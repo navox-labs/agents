@@ -245,17 +245,17 @@ fi
 # Plugin agent count
 if [ -f ".claude-plugin/plugin.json" ]; then
   PLUGIN_AGENT_COUNT=$(grep -c '\.claude/agents/' .claude-plugin/plugin.json || echo "0")
-  if [ "$PLUGIN_AGENT_COUNT" -eq 15 ]; then
-    pass "plugin.json: lists 15 agents"
+  if [ "$PLUGIN_AGENT_COUNT" -eq 19 ]; then
+    pass "plugin.json: lists 19 agents"
   else
-    fail "plugin.json: lists $PLUGIN_AGENT_COUNT agents (expected 15)"
+    fail "plugin.json: lists $PLUGIN_AGENT_COUNT agents (expected 19)"
   fi
 
   PLUGIN_CMD_COUNT=$(grep -c '\.claude/commands/' .claude-plugin/plugin.json || echo "0")
-  if [ "$PLUGIN_CMD_COUNT" -eq 15 ]; then
-    pass "plugin.json: lists 15 commands"
+  if [ "$PLUGIN_CMD_COUNT" -eq 19 ]; then
+    pass "plugin.json: lists 19 commands"
   else
-    fail "plugin.json: lists $PLUGIN_CMD_COUNT commands (expected 15)"
+    fail "plugin.json: lists $PLUGIN_CMD_COUNT commands (expected 19)"
   fi
 fi
 
@@ -266,19 +266,19 @@ section "Agent count consistency"
 # Count actual agent files
 ACTUAL_COUNT=$(ls -1 .claude/agents/*.md 2>/dev/null | wc -l | tr -d ' ')
 
-if [ "$ACTUAL_COUNT" -eq 15 ]; then
-  pass "15 agent files found"
+if [ "$ACTUAL_COUNT" -eq 19 ]; then
+  pass "19 agent files found"
 else
-  fail "expected 15 agent files, found $ACTUAL_COUNT"
+  fail "expected 19 agent files, found $ACTUAL_COUNT"
 fi
 
 # Count actual command files
 ACTUAL_CMD_COUNT=$(ls -1 .claude/commands/*.md 2>/dev/null | wc -l | tr -d ' ')
 
-if [ "$ACTUAL_CMD_COUNT" -eq 15 ]; then
-  pass "15 command files found"
+if [ "$ACTUAL_CMD_COUNT" -eq 19 ]; then
+  pass "19 command files found"
 else
-  fail "expected 15 command files, found $ACTUAL_CMD_COUNT"
+  fail "expected 19 command files, found $ACTUAL_CMD_COUNT"
 fi
 
 # ─── New root files ──────────────────────────────────────────

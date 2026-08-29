@@ -23,7 +23,9 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 
+from navox.budget import Budget, BudgetExceeded
 from navox.journal import Journal, JournalEntry
+from navox.notify import Notifier
 from navox.models.agent_config import AgentConfig
 from navox.models.output_schema import AgentOutput
 from navox.validators.output_validator import validate_output
@@ -150,12 +152,19 @@ class Orchestrator:
         registry_path: str | Path = "sdk/agents_registry.json",
         journal_path: str | Path = ".navox/journal.json",
         max_parallel: int = 2,
+        notifier: "Notifier | None" = None,
+        budget: "Budget | None" = None,
     ):
         self.agents_dir = Path(agents_dir)
         self.registry_path = Path(registry_path)
         self.journal = Journal(journal_path)
         self.max_parallel = max_parallel
         self._client = None
+
+        # Unattended operation: the human is not at the desk, so the run must
+        # report outward and must be able to stop itself spending money.
+        self.notifier = notifier if notifier is not None else Notifier()
+        self.budget = budget if budget is not None else Budget(notifier=self.notifier)
 
         # Load agent configs
         self.agents: dict[str, AgentConfig] = {}
@@ -232,6 +241,28 @@ class Orchestrator:
 
             result.steps.extend(group_results)
 
+            # Report outward and meter spend before deciding whether to continue.
+            for step in group_results:
+                self.notifier.step_complete(step)
+                if step.token_usage:
+                    try:
+                        self.budget.charge(
+                            step.model,
+                            step.token_usage.get("input_tokens", 0),
+                            step.token_usage.get("output_tokens", 0),
+                        )
+                    except BudgetExceeded as e:
+                        result.interrupted = True
+                        result.interrupt_reason = str(e)
+                        self.notifier.escalation(
+                            "orchestrator", str(e),
+                            ["RAISE BUDGET: <usd>", "STOP"],
+                        )
+                        logger.error("Chain halted on budget: %s", e)
+
+            if result.interrupted:
+                break
+
             # Update context with outputs
             for step in group_results:
                 if step.ok or step.cached:
@@ -246,12 +277,18 @@ class Orchestrator:
                         f"{step.agent_id} returned {step.status}: {step.error}"
                     )
                     logger.error(f"Chain interrupted: {result.interrupt_reason}")
+                    self.notifier.escalation(
+                        step.agent_id,
+                        f"{step.status}: {step.error or 'no detail supplied'}",
+                        ["RETRY", "SKIP", "STOP"],
+                    )
                     break
 
             if result.interrupted:
                 break
 
         result.finished_at = datetime.now(timezone.utc).isoformat()
+        self.notifier.chain_complete(result)
         logger.info(
             f"Sprint {'COMPLETE' if result.ok else 'INTERRUPTED'}: "
             f"{len(result.steps)} steps, "

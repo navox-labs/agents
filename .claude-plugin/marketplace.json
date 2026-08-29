@@ -7,14 +7,28 @@
   "plugins": [
     {
       "name": "navox-agents",
-      "description": "15-agent AI engineering team for Claude Code. Full sprint cycle: Strategist, Spec Writer, Architect, UX, Full Stack, Investigator, Reviewer, DevOps, Local Review, QA, Security, Shipper, Retro, Context Manager, Installer. HITL checkpoints, handoff contracts, eval system, 3 sprint modes (FULL/QUICK/HOTFIX), and /agency-run orchestrator.",
+      "description": "19-agent AI engineering team for Claude Code. Full sprint cycle: Think, Plan, Critique, Build, Review, Test, Ship, Reflect. Mobile and privacy specialists, plan critic gate, HITL checkpoints, handoff contracts, eval system, unattended operation with notifications, hard budget caps, and worktree isolation.",
       "source": {
         "source": "github",
         "repo": "navox-labs/agents"
       },
-      "version": "3.0.0",
+      "version": "3.1.0",
       "category": "productivity",
-      "keywords": ["agents", "engineering", "devtools", "claude-code", "sprint", "review", "shipping", "debugging", "retrospective"]
+      "keywords": [
+        "agents",
+        "claude-code",
+        "debugging",
+        "devtools",
+        "engineering",
+        "mobile",
+        "privacy",
+        "react-native",
+        "retrospective",
+        "review",
+        "shipping",
+        "sprint",
+        "unattended"
+      ]
     }
   ]
 }
