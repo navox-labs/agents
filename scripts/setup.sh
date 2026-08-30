@@ -109,6 +109,16 @@ for agent_file in "${AGENT_FILES[@]}"; do
     echo -e "  ${GREEN}+${NC} $name"
 done
 
+# Orchestrator commands have no matching agent file, so the loop above skips
+# them. They are the entry points — without them there is no /agency-run.
+for extra in agency-run hire-team; do
+    extra_file="$REPO_DIR/.claude/commands/$extra.md"
+    if [ -f "$extra_file" ]; then
+        cp "$extra_file" "$COMMANDS_TARGET/$extra.md"
+        echo -e "  ${GREEN}+${NC} $extra.md (command)"
+    fi
+done
+
 # Copy ETHOS.md to target (agents reference it)
 if [ "$SCOPE" = "global" ]; then
     ETHOS_TARGET="$HOME/.claude/ETHOS.md"
@@ -118,6 +128,16 @@ fi
 if [ -f "$REPO_DIR/ETHOS.md" ] && [ ! -f "$ETHOS_TARGET" ]; then
     cp "$REPO_DIR/ETHOS.md" "$ETHOS_TARGET"
     echo -e "  ${GREEN}+${NC} ETHOS.md"
+fi
+
+# Agent prompts say "read ETHOS.md", a path relative to the project you are
+# working in. On a global install that resolves to <your project>/ETHOS.md,
+# which does not exist, so agents silently lose their philosophy file. Drop a
+# copy into the current project too, unless one is already there.
+if [ "$SCOPE" = "global" ] && [ -f "$REPO_DIR/ETHOS.md" ] && [ ! -f "./ETHOS.md" ] \
+   && [ "$(pwd)" != "$REPO_DIR" ]; then
+    cp "$REPO_DIR/ETHOS.md" "./ETHOS.md"
+    echo -e "  ${GREEN}+${NC} ETHOS.md (into this project — agents resolve it relatively)"
 fi
 
 echo ""

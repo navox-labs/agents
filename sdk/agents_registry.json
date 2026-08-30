@@ -1,5 +1,5 @@
 {
-  "version": "3.1.0",
+  "version": "3.2.0",
   "team_name": "Navox Engineering Team",
   "agents": [
     {
@@ -315,7 +315,8 @@
       "sprint_position": {
         "full": 7,
         "quick": null,
-        "hotfix": null
+        "hotfix": null,
+        "mobile": 8
       },
       "handoff": {
         "receives_from": [
@@ -1097,7 +1098,8 @@
           "critic"
         ],
         "mode": "CRITIQUE",
-        "gate": "plan"
+        "gate": "plan",
+        "mandatory": true
       },
       {
         "group": 5,
@@ -1112,7 +1114,8 @@
           "DESIGN-REVIEW"
         ],
         "parallel": true,
-        "gate": null
+        "gate": null,
+        "mandatory": true
       },
       {
         "group": 6,
@@ -1128,7 +1131,8 @@
           "device-review"
         ],
         "mode": "REVIEW",
-        "gate": "device"
+        "gate": "device",
+        "mandatory": true
       },
       {
         "group": 8,
@@ -1136,7 +1140,8 @@
           "reviewer"
         ],
         "mode": "REVIEW",
-        "gate": null
+        "gate": null,
+        "mandatory": true
       },
       {
         "group": 9,
@@ -1157,7 +1162,8 @@
           "privacy"
         ],
         "mode": "LAUNCH-REVIEW",
-        "gate": "privacy"
+        "gate": "privacy",
+        "mandatory": true
       },
       {
         "group": 11,

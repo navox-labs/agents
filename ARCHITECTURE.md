@@ -68,14 +68,17 @@ gate at both design and launch, and a dual-platform device checkpoint in place
 of the browser-based one.
 ```
 THINK    → strategist DIAGNOSE
-PLAN     → spec-writer WRITE → architect DESIGN → critic CRITIQUE
-DESIGN   → parallel(ux, security, privacy)
-BUILD    → mobile BUILD → device-review REVIEW
-REVIEW   → reviewer REVIEW
+PLAN     → spec-writer WRITE → architect DESIGN → critic CRITIQUE *
+DESIGN   → parallel(ux, security, privacy) *
+BUILD    → mobile BUILD → device-review REVIEW *
+REVIEW   → reviewer REVIEW *
 TEST     → parallel(qa TEST-RUN, security CODE-AUDIT)
-GATE     → privacy LAUNCH-REVIEW
+GATE     → privacy LAUNCH-REVIEW *
 SHIP     → shipper SHIP → retro RETRO
 ```
+`*` marks groups the orchestrator may not skip. An orchestrator improvising a
+chain will drop review agents first, because they produce findings rather than
+artifacts — which is exactly backwards.
 
 ## Why a plan critic
 
