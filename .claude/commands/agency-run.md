@@ -19,11 +19,14 @@ These are the people you're coordinating. Use their names, not their role titles
 | Marcus Chen | Spec Writer | _spec-writer |
 | Dmitri Volkov | Architect | _architect |
 | Lena Ishida | UX Designer | _ux |
+| Beatriz Oyelaran | Plan Critic | _critic |
 | Jordan Rivera | Full Stack Engineer | _fullstack |
+| Tomás Ferreira | Mobile Engineer | _mobile |
 | Sam Okafor | Investigator | _investigator |
 | Ava Lindström | Code Reviewer | _reviewer |
 | Priya Sharma | QA Engineer | _qa |
 | Kai Nakamura | Security Engineer | _security |
+| Dr. Ines Haddad | Privacy Engineer | _privacy |
 | Omar Hassan | DevOps Engineer | _devops |
 | Elena Torres | Release Engineer | _shipper |
 | James Wright | Retro Facilitator | _retro |
@@ -31,7 +34,11 @@ These are the people you're coordinating. Use their names, not their role titles
 
 ## Sprint Mode Selection
 
-Before starting, determine the sprint mode. If the builder specifies a mode (e.g., `/agency-run HOTFIX fix login bug`), use it. Otherwise, select based on the task:
+Before starting, determine the sprint mode. If the builder specifies a mode (e.g. `/agency-run HOTFIX fix login bug`, or
+`/agency-run mobile "M2: shift log"`), **use exactly that mode**. The mode
+argument is not a hint — a builder who names a mode has already decided. Never
+silently fall back to a different mode; if the named mode is unknown, stop and
+say so rather than improvising. Otherwise, select based on the task:
 
 ### FULL Sprint
 Use for: new features, major changes, anything that touches auth or data models.
@@ -55,6 +62,31 @@ TEST:    Priya — TEST-RUN
 SHIP:    Elena — SHIP
 ```
 
+### MOBILE Sprint
+Use for: anything shipping to iOS or Android — React Native, Expo, EAS, native
+dependencies, store submission. Same rigour as FULL, plus a plan critic before
+build, a privacy gate at design and at ship, and a dual-platform device
+checkpoint in place of the browser one.
+```
+THINK:   Raya — DIAGNOSE (validate the idea)
+PLAN:    Marcus — WRITE (create spec) → Dmitri — DESIGN (system design)
+CRITIQUE: Beatriz — CRITIQUE (plan review before any code)
+DESIGN:  parallel: Lena — DESIGN + Kai — DESIGN-REVIEW + Ines — DESIGN-REVIEW
+BUILD:   Tomás — BUILD → device-review — HUMAN CHECKPOINT
+REVIEW:  Ava — REVIEW (mandatory, never skipped)
+TEST:    parallel: Priya — TEST-RUN + Kai — CODE-AUDIT
+GATE:    Ines — LAUNCH-REVIEW (mandatory before ship)
+SHIP:    Elena — SHIP (tests → changelog → PR)
+REFLECT: James — RETRO (capture learnings)
+```
+
+**Do not substitute Jordan for Tomás on a mobile task.** Jordan is web-shaped;
+React Native, EAS pipelines, native dependency decisions and store submission
+are a different discipline.
+
+**`local-review` will hang on an Expo project** — it starts a browser dev
+server and waits for a page that never loads. Use `device-review` instead.
+
 ### HOTFIX Sprint
 Use for: bugs, incidents, production issues.
 ```
@@ -64,7 +96,7 @@ SHIP:        Elena — SHIP
 ```
 
 State your selected mode before proceeding:
-> **Sprint mode: [FULL | QUICK | HOTFIX]** — because [reason]
+> **Sprint mode: [FULL | QUICK | MOBILE | HOTFIX]** — because [reason]
 
 ## Step 1 — Read project memory
 
@@ -106,6 +138,24 @@ Group 8 (parallel):   Priya + Kai — TEST-RUN + CODE-AUDIT
 Group 9 (sequential): Elena — SHIP (tests → changelog → PR)
 Group 10 (sequential): James — RETRO (capture learnings)
 SKIPPED: [any agents and why they're not needed]
+```
+
+For MOBILE sprint:
+```
+EXECUTION ORDER (MOBILE):
+Group 1  (sequential): Raya — DIAGNOSE
+Group 2  (sequential): Marcus — WRITE
+Group 3  (sequential): Dmitri — DESIGN
+Group 4  (sequential): Beatriz — CRITIQUE (gate: plan)
+Group 5  (parallel):   Lena + Kai + Ines — DESIGN / DESIGN-REVIEW / DESIGN-REVIEW
+Group 6  (sequential): Tomás — BUILD
+Group 7  (sequential): device-review — HUMAN CHECKPOINT (gate: device)
+Group 8  (sequential): Ava — REVIEW (MANDATORY — see below)
+Group 9  (parallel):   Priya + Kai — TEST-RUN + CODE-AUDIT
+Group 10 (sequential): Ines — LAUNCH-REVIEW (gate: privacy, MANDATORY)
+Group 11 (sequential): Elena — SHIP
+Group 12 (sequential): James — RETRO
+SKIPPED: [any agents and why — Ava and Ines may never appear here]
 ```
 
 For QUICK sprint:

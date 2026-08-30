@@ -180,8 +180,13 @@ No authentication. No backend. Single HTML file.
 
 ### Mobile — full rigour for React Native and Expo
 
-Adds the plan critic, a privacy gate at both design and launch, and a
-dual-platform device checkpoint in place of the browser-based one.
+Adds the plan critic, a privacy gate at both design and launch, a mandatory
+code review, and a dual-platform device checkpoint in place of the
+browser-based one. `local-review` hangs on an Expo project — it waits for a
+browser page that never loads — so `device-review` replaces it.
+
+Four groups are marked mandatory and may not be skipped: `critic`,
+`device-review`, `reviewer` and `privacy`.
 
 ```
 /agency-run mobile "Build the shift logger"
