@@ -24,3 +24,6 @@ Thumbs.db
 
 # Superpowers (internal brainstorming artifacts)
 docs/superpowers/
+
+# Private planning docs — never publish
+VISIBILITY-PLAN.md
